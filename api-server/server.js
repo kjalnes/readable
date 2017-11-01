@@ -129,7 +129,9 @@ app.use((req, res, next) => {
 app.get('/categories', (req, res) => {
     categories.getAll(req.token)
       .then(
-          (data) => res.send(data),
+          (data) => {
+            res.send(data)
+          },
           (error) => {
               console.error(error)
               res.status(500).send({
