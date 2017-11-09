@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import logo from '../assets/images/logo.png';
 import bookLogo from '../assets/images/book.png';
 import '../App.css';
+import Header from './Header';
+import Posts from './Posts';
 import Categories from './Categories';
 import { connect } from 'react-redux';
-import { fetchCategories, receiveCategories } from '../actions/categories';
+import { Route, Link } from 'react-router-dom';
+import { fetchCategories } from '../actions/categories';
 
 class App extends Component {
   constructor(props) {
@@ -15,35 +18,10 @@ class App extends Component {
   }
 
   componentDidMount() {
-    /* works but unsure if this is correct */
     this.props.fetchCategories()
-
-    // fetch('http://localhost:3001/categories',
-    //   {
-    //     headers: { 'Authorization': 'whatever-you-want' }
-    //   })
-    //   .then( (res) => {
-    //     return res.text()
-    //   })
-    //   .then((data) => {
-    //     // this.setState({backend:data});
-    //     let categories = JSON.parse(data).categories;
-    //     this.props.receiveCategories(categories)
-    //   });
-
-  /* copied from udacity classroom App.js*/
-  //   const url = `${process.env.REACT_APP_BACKEND}/categories`;
-  //   console.log('fetching from url', url);
-  //   fetch(url, { headers: { 'Authorization': 'whatever-you-want' },
-  //                credentials: 'include' } )
-  //     .then( (res) => { return(res.text()) })
-  //     .then((data) => {
-  //       this.setState({backend:data});
-  //     });
   }
 
   render() {
-    console.log('!!!', this.props.categories)
     return (
       <div className="App">
         <header className="App-header">
@@ -59,20 +37,42 @@ class App extends Component {
         <p className="App-intro">
         Udacity Project
         </p>
-        <Categories />
-        {this.props.categories}
+        <Header />
+        {this.props.categories.map( (cat, i) => {
+            return (
+              <Route exact path={`/${cat.path}`} key={i} render={ () => (
+                  <Posts category={cat.name} /> )}
+              />
+            )
+        })}
+        <hr />
       </div>
     );
   }
 }
 
 
+
 const mapDispatchToProps = (dispatch) => {
     return {
-        // receiveCategories: (data) => dispatch(receiveCategories(data)),
         fetchCategories: () => dispatch(fetchCategories())
     }
 }
 
+const mapStateToProps = (state, props) => {
+  return {
+    categories: state.categories
+  }
+}
 
-export default connect(null, mapDispatchToProps)(App);
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
+
+// <Link to={{
+//   pathname: '/courses',
+//   search: '?sort=name',
+//   hash: '#the-hash',
+//   state: { fromDashboard: true }
+// }}>
+//   Courses
+// </Link>

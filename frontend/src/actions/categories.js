@@ -1,7 +1,8 @@
-import axios from 'axios';
-
 // constants
 const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES';
+
+const server = process.env.REACT_APP_BACKEND || 'http://localhost:5000';
+
 
 // actions
 const receiveCategories = (categories) => {
@@ -11,23 +12,20 @@ const receiveCategories = (categories) => {
     }
 }
 
+// action async method
 const fetchCategories = () => (dispatch) => {
-    fetch('http://localhost:3001/categories',
-      {
-        headers: { 'Authorization': 'whatever-you-want' }
-      })
-      .then( (res) => {
-        return res.text()
-      })
-      .then((data) => {
-        let categories = JSON.parse(data).categories;
-        dispatch(receiveCategories(categories))
-      })
+    return fetch(`${server}/categories`,
+        {
+            headers: { 'Authorization': 'whatever-you-want' }
+        })
+        .then( (res) => res.text() )
+        .then( data => {
+            data = JSON.parse(data).categories;
+            return dispatch(receiveCategories(data))
+        })
 }
-
 
 export {
     RECEIVE_CATEGORIES,
-    fetchCategories,
-    receiveCategories
+    fetchCategories
 };

@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 class Categories extends Component {
+    state = {
+        activeTab: null
+    }
 
     componentDidMount() {
         // console.log(this.props.categories)
@@ -14,7 +17,11 @@ class Categories extends Component {
                 <ul>
                     {this.props.categories.map( (cat, i) => {
                             return (
-                                <li onClick={()=>console.log('click')} key={i}>{cat.name}</li>)
+                                <li onClick={()=> {
+                                        console.log('click')
+                                    }} key={i}>
+                                    {cat.name}
+                                </li>)
                         })
                     }
                 </ul>
