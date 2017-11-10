@@ -1,7 +1,7 @@
 // constants
 const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES';
 
-const server = process.env.REACT_APP_BACKEND || 'http://localhost:5000';
+const server = process.env.REACT_APP_BACKEND || 'http://localhost:3001';
 
 
 // actions

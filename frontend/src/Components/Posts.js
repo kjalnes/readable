@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Post from './Post';
 import { fetchPosts } from '../actions/posts';
-
-
+import { firstLetterUppercase } from '../utils';
 
 class Posts extends Component {
     state = {
-
+        filter: 'voteScore'
     }
 
     componentDidMount() {
@@ -22,23 +21,56 @@ class Posts extends Component {
         return postsCollection;
     }
 
+    onFilterChange(event) {
+        const filter = event.target.value;
+        this.setState({filter});
+    }
+
+    sortPosts(posts) {
+        const filter = this.state.filter;
+
+        return posts.sort( (postA, postB) => {
+            if(filter === 'timestamp') {
+                return postA[filter] - postB[filter]
+            }
+            return postB[filter] - postA[filter]
+        })
+    }
+
     render() {
         const { category, posts } = this.props;
-        const _posts = category ?
-            posts[category] :
-            this.getAllPosts(posts);
+        const _posts = category ? posts[category] : this.getAllPosts(posts);
+        const filters = [
+            {name: 'Vote score', key: 'voteScore'},
+            {name: 'Timestamp', key: 'timestamp'},
+            {name: 'Comments', key: 'commentCount'}];
         return (
             <div>
-                <h1>{category || <span>All posts</span>}</h1>
-                <select name="select">
-                  <option value="value1">Value 1</option>
-                  <option value="value2" selected>Value 2</option>
-                  <option value="value3">Value 3</option>
-                </select>
+                <h1>
+                    {   category ?
+                        firstLetterUppercase(category) :
+                        <span>All posts</span>
+                    }
+                </h1>
+                {
+                    _posts ?
+                    <div>
+                        <label>Sort by </label>
+                        <select
+                            name="select"
+                            defaultValue={this.state.filter}
+                            onChange={this.onFilterChange.bind(this)}>
+                                {filters.map((filter, i) => (
+                                    <option value={filter.key} key={i}>{filter.name}</option>
+                                ))}
+                        </select>
+                    </div> : null
+                }
                 <ul>
                 {   _posts && _posts.length ?
-                    _posts.map( (_post, i) => <li key={i}><Post post={_post} /></li>) :
-                    <li>There are no posts in this category yet.</li>
+                    this.sortPosts(_posts).map((post, i) => (
+                        <li key={i}><Post post={post} /></li>)) :
+                        <li>There are no posts in this category yet.</li>
                 }
                 </ul>
             </div>
@@ -48,7 +80,6 @@ class Posts extends Component {
 
 
 const mapStateToProps = (state, props) => {
-
     return {
         posts: state.posts
     }

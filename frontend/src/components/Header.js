@@ -3,22 +3,19 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import logo from '../assets/images/logo.png';
 import bookLogo from '../assets/images/book.png';
+import { firstLetterUppercase } from '../utils';
 
 class Header extends Component {
     constructor() {
       super()
       this.state = {
-        tab: 'all'
       }
-    }
-
-    setActiveTab(cat) {
-      this.setState({tab: cat})
     }
 
     render() {
         let { categories } = this.props;
         categories = [{name:'all', path:''}].concat(categories);
+        const path = this.props.location.pathname.slice(1);
         return (
             <div>
               <header className="App-header">
@@ -33,16 +30,15 @@ class Header extends Component {
                 <h1 className="App-title">Readable</h1>
               </header>
               <p className="App-intro">Udacity Project</p>
-              <ul>
+              <ul className='nav'>
                 {categories.map((cat, i) => {
-                const linkClassName = this.state.tab === cat.name ? 'active' : '';
+                const linkClass = path === cat.path ? 'active' : '';
                 return (
-                    <li key={i}>
+                    <li key={i} className='nav-tabs'>
                       <Link
                         to={`/${cat.path}`}
-                        className={linkClassName}
-                        onClick={() => this.setActiveTab(cat.name)}
-                        >{cat.name}</Link>
+                        className={linkClass}
+                        >{firstLetterUppercase(cat.name)}</Link>
                     </li>)
               })}
               </ul>

@@ -19,7 +19,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Header />
+        <Header {...this.props} />
         <Route exact path='/' render={() => <Posts category={null} /> } />
         {this.props.categories.map( (cat, i) => {
             return (
@@ -30,7 +30,6 @@ class App extends Component {
               />
             )
         })}
-        <hr />
       </div>
     );
   }

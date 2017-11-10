@@ -1,7 +1,7 @@
 // constants
 const RECEIVE_POSTS = 'RECEIVE_POSTS';
 
-const server = process.env.REACT_APP_BACKEND || 'http://localhost:5000';
+const server = process.env.REACT_APP_BACKEND || 'http://localhost:3001';
 
 // actions
 const receivePosts = (posts) => {

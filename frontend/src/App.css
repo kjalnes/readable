@@ -41,7 +41,29 @@ img.App-logo-1 {
   to { transform: rotate(360deg); }
 }
 
-
-.active {
-  color: orange;
+ul.nav {
+    background-color: lightgoldenrodyellow;
 }
+
+
+li.nav-tabs {
+    display: inline;
+    margin: 0px 10px;
+}
+
+.nav-tabs a {
+    text-decoration: none;
+}
+
+a.active {
+  color: orange;
+  text-decoration: underline;
+}
+
+
+li {
+    list-style: none;
+}
+
+
+
