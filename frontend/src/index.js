@@ -14,7 +14,9 @@ import store from './store';
 ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter>
-            <Route component={App} />
+            <div>
+                <Route component={App} />
+            </div>
         </BrowserRouter>
     </Provider>,
     document.getElementById('root'));

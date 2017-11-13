@@ -14,7 +14,6 @@ class Header extends Component {
 
     render() {
         let { categories } = this.props;
-        categories = [{name:'all', path:''}].concat(categories);
         const path = this.props.location.pathname.slice(1);
         return (
             <div>
@@ -50,8 +49,9 @@ class Header extends Component {
 
 
 const mapStateToProps = (state, props) => {
+  const categories = [{name:'all', path:''}].concat(state.categories);
   return {
-    categories: state.categories
+    categories
   }
 }
 

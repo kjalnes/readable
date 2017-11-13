@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import '../App.css';
 import Header from './Header';
 import Posts from './Posts';
+import Post from './Post';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 import { fetchCategories } from '../actions/categories';
+
 
 class App extends Component {
   constructor(props) {
@@ -13,23 +15,25 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchCategories()
+    this.props.fetchCategories();
   }
 
   render() {
     return (
       <div className="App">
         <Header {...this.props} />
-        <Route exact path='/' render={() => <Posts category={null} /> } />
+
         {this.props.categories.map( (cat, i) => {
             return (
               <Route
                 exact path={`/${cat.path}`}
                 key={i}
-                render={ () => <Posts category={cat.name} /> }
+                render={ () => <Posts category={cat.name} {...this.props} /> }
               />
             )
         })}
+
+        <Route path='/:category/:id' component={Post} />
       </div>
     );
   }
@@ -42,8 +46,10 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const mapStateToProps = (state, props) => {
+  const categories = [{name:'all', path:''}].concat(state.categories);
   return {
-    categories: state.categories
+    categories
+
   }
 }
 

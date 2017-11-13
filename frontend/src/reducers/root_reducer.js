@@ -7,25 +7,3 @@ export default combineReducers({
     categories: categoriesReducer,
     posts: postsReducer
 });
-
-
-/*
-    posts: {
-        {
-            cat: [],
-            cat2: []
-        }
-    }
-
-*/
-
-/*
-    {
-        categories: [],
-        posts: [
-            {
-
-            }
-        ]
-    }
-*/

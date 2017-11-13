@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Route, Link } from 'react-router-dom';
 import Post from './Post';
 import { fetchPosts } from '../actions/posts';
 import { firstLetterUppercase } from '../utils';
@@ -9,7 +10,7 @@ class Posts extends Component {
         filter: 'voteScore'
     }
 
-    componentDidMount() {
+    componentDidMount(props) {
         this.props.fetchPosts();
     }
 
@@ -39,7 +40,8 @@ class Posts extends Component {
 
     render() {
         const { category, posts } = this.props;
-        const _posts = category ? posts[category] : this.getAllPosts(posts);
+        console.log('category',category)
+        const _posts = category && category === 'all' ? this.getAllPosts(posts) : posts[category];
         const filters = [
             {name: 'Vote score', key: 'voteScore'},
             {name: 'Timestamp', key: 'timestamp'},
@@ -47,13 +49,12 @@ class Posts extends Component {
         return (
             <div>
                 <h1>
-                    {   category ?
-                        firstLetterUppercase(category) :
-                        <span>All posts</span>
+                    {
+                        category && firstLetterUppercase(category)
                     }
                 </h1>
                 {
-                    _posts ?
+                    _posts && _posts.length ?
                     <div>
                         <label>Sort by </label>
                         <select
@@ -64,15 +65,17 @@ class Posts extends Component {
                                     <option value={filter.key} key={i}>{filter.name}</option>
                                 ))}
                         </select>
-                    </div> : null
+
+                        <ul>
+                        {this.sortPosts(_posts).map((post, i) => (
+                            <li key={i}>
+                                <Link to={`${post.category}/${post.id}`}>{post.title}</Link>
+                            </li>))
+                        }
+                        </ul>
+                    </div> :
+                    <li>There are no posts in this category yet.</li>
                 }
-                <ul>
-                {   _posts && _posts.length ?
-                    this.sortPosts(_posts).map((post, i) => (
-                        <li key={i}><Post post={post} /></li>)) :
-                        <li>There are no posts in this category yet.</li>
-                }
-                </ul>
             </div>
         )
     }
@@ -90,7 +93,6 @@ const mapDispatchToProps = (dispatch) => {
         fetchPosts: () => dispatch(fetchPosts())
     }
 }
-
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Posts);
