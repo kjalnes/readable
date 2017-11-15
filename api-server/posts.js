@@ -21,7 +21,29 @@ const defaultData = {
     body: 'Just kidding. It takes more than 10 minutes to learn technology.',
     author: 'thingone',
     category: 'redux',
-    voteScore: -5,
+    voteScore: 15,
+    deleted: false,
+    commentCount: 0
+  },
+  "600003ym7mf1p33lnez": {
+    id: '600003ym7mf1p33lnez',
+    timestamp: 1468479787190,
+    title: 'Redux redux redux!',
+    body: 'Another GREAT post about redux.',
+    author: 'thingone',
+    category: 'redux',
+    voteScore: 100,
+    deleted: false,
+    commentCount: 0
+  },
+   "14n20ok3ym7mf1p33lnix": {
+    id: '14n20ok3ym7mf1p33lnix',
+    timestamp: 1468479767195,
+    title: 'Alert!',
+    body: 'Can the real slim shady please stand up!',
+    author: 'thingthree',
+    category: 'node',
+    voteScore: 25,
     deleted: false,
     commentCount: 0
   }

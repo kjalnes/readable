@@ -13,6 +13,9 @@ const app = express()
 app.use(express.static('public'))
 app.use(cors())
 
+// app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.json());
+
 
 app.get('/', (req, res) => {
   const help = `
@@ -289,6 +292,8 @@ app.post('/comments', bodyParser.json(), (req, res) => {
 
 app.post('/comments/:id', bodyParser.json(), (req, res) => {
     const { option } = req.body
+    console.log('req.body', req.body)
+    console.log('option', option)
     comments.vote(req.token, req.params.id, option)
       .then(
           (data) => res.send(data),
