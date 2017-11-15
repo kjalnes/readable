@@ -7,6 +7,7 @@ const sortPosts = (posts) => {
     return posts;
 }
 
+
 const postsReducer = (state=[], action) => {
     switch(action.type) {
         case RECEIVE_POSTS:

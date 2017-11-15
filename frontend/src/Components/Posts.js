@@ -12,6 +12,7 @@ class Posts extends Component {
 
     componentDidMount(props) {
         this.props.fetchPosts();
+        // this.props.fetchCategories();
     }
 
     getAllPosts(posts) {
@@ -40,7 +41,7 @@ class Posts extends Component {
 
     render() {
         const { category, posts } = this.props;
-        console.log('category',category)
+        // console.log('category',category)
         const _posts = category && category === 'all' ? this.getAllPosts(posts) : posts[category];
         const filters = [
             {name: 'Vote score', key: 'voteScore'},
