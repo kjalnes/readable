@@ -67,3 +67,11 @@ li {
 
 
 
+.comment-box {
+    border: 1px solid lightgray;
+    width: 50%;
+    text-align: left;
+    margin: 0 auto;
+    font-size: 13px;
+    padding: 4px 37px;
+}

@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchComments } from '../actions/comments';
-import moment from 'moment';
+import { parseDate }  from '../utils';
+import Comment from './Comment';
 
 class Post extends Component {
     state = {
-    }
-
-    parseDate(date) {
-        return moment(date).format('MMMM Do YYYY');
     }
 
     componentDidMount() {
@@ -26,9 +23,14 @@ class Post extends Component {
                 <h2>{post.title}</h2>
                 <p>{post.body}</p>
                 <p>Vote score: {post.voteScore}</p>
-                <p>Written by {post.author} | Posted on {this.parseDate(post.timestamp)}</p>
+                <p>Written by {post.author} | Posted on {parseDate(post.timestamp)}</p>
                 <p>Comments: {post.commentCount}</p>
-                <p> {postComments && postComments.length ? postComments[0].body : null} </p>
+                <p> {postComments && postComments.length ?
+                    postComments.map( comment => (
+                        <Comment comment={comment} />
+                    ))
+                 : null }
+                 </p>
             </div>
         )
     }
