@@ -17,7 +17,7 @@ class Posts extends Component {
     getAllPosts(posts) {
         let postsCollection = [];
         for(var category in posts) {
-            postsCollection.push(posts[category][0])
+            postsCollection = postsCollection.concat(posts[category])
         }
         return postsCollection;
     }
