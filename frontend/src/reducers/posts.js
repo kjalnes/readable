@@ -1,4 +1,4 @@
-import { RECEIVE_POSTS } from '../actions/posts';
+import { RECEIVE_POSTS, UPDATE_POST } from '../actions/posts';
 
 const sortPosts = (posts) => {
     for(var post in posts) {
@@ -20,6 +20,17 @@ const postsReducer = (state=[], action) => {
                 return obj
             }, {})
             return sortPosts(postsObj)
+        case UPDATE_POST:
+            let category = action.post.category;
+            const updatedCategory = state[category].map( post => {
+                if(post.id === action.post.id) {
+                    return action.post
+                }
+                return post
+            })
+            let res = Object.assign({}, state);
+            res[category] = updatedCategory;
+            return res
         default:
             return state;
     }

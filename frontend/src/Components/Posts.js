@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Route, Link } from 'react-router-dom';
-import Post from './Post';
+import { Link } from 'react-router-dom';
 import { fetchPosts } from '../actions/posts';
 import { firstLetterUppercase } from '../utils';
 
@@ -12,7 +11,6 @@ class Posts extends Component {
 
     componentDidMount(props) {
         this.props.fetchPosts();
-        // this.props.fetchCategories();
     }
 
     getAllPosts(posts) {
@@ -41,7 +39,6 @@ class Posts extends Component {
 
     render() {
         const { category, posts } = this.props;
-        // console.log('category',category)
         const _posts = category && category === 'all' ? this.getAllPosts(posts) : posts[category];
         const filters = [
             {name: 'Vote score', key: 'voteScore'},

@@ -1,6 +1,6 @@
 // constants
 const RECEIVE_POSTS = 'RECEIVE_POSTS';
-const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS';
+const UPDATE_POST = 'UPDATE_POST';
 
 const server = process.env.REACT_APP_BACKEND || 'http://localhost:3001';
 
@@ -25,9 +25,33 @@ const fetchPosts = () => (dispatch) => {
         })
 }
 
+const updatePostSuccess = (post) => {
+    return {
+        type: UPDATE_POST,
+        post
+    }
+}
+
+const updatePost = (id, option) => (dispatch) => {
+    return fetch(`${server}/posts/${id}`, {
+        method: 'POST',
+        body: JSON.stringify({ option: option }),
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'whatever-you-want'
+        }
+    })
+    .then( res => res.json())
+    .then( data => {
+          return dispatch(updatePostSuccess(data, id))
+    })
+}
 
 
 export {
     RECEIVE_POSTS,
+    UPDATE_POST,
     fetchPosts,
+    updatePost
 };
