@@ -40,29 +40,37 @@ class Posts extends Component {
             <div className='posts-list'>
                 <h1>{category && firstLetterUppercase(category)}</h1>
                 { _posts && _posts.length ?
-                    <div>
-                        <label>Sort by </label>
-                        <select
-                            name="select"
-                            defaultValue={this.state.filter}
-                            onChange={this.onFilterChange.bind(this)}>
-                            {filters.map((filter, i) => (
-                                <option value={filter.key} key={i}>
-                                    {filter.name}
-                                </option>))}
-                        </select>
+                <div>
+                    <label>Sort by </label>
+                    <select
+                        name="select"
+                        defaultValue={this.state.filter}
+                        onChange={this.onFilterChange.bind(this)}>
+                        {filters.map((filter, i) => (
+                            <option value={filter.key} key={i}>
+                                {filter.name}
+                            </option>))}
+                    </select>
 
-                        <ul>
-                        {sortCollection(_posts, this.state.filter).map((post, i) => (
-                            <li key={i}>
-                                <Link to={`${post.category}/${post.id}`}>
-                                {post.title} - posted on {parseDate(post.timestamp)}</Link>
-                            </li>))
-                        }
-                        </ul>
-                    </div> :
-                    <div className='none'>There are no posts in this category yet.</div>}
-                {<PostForm categories={categories} createPost={createPost} {...this.props}/>}
+                    <ul>
+                    {sortCollection(_posts, this.state.filter).map((post, i) => (
+                        <li key={i}>
+                            <Link to={`${post.category}/${post.id}`}>
+                            {post.title} - posted on {parseDate(post.timestamp)}</Link>
+                        </li>))
+                    }
+                    </ul>
+                </div> :
+                <div className='none'>
+                    There are no posts in this category yet.
+                </div>}
+                <hr />
+                {<PostForm
+                    categories={categories}
+                    createPost={createPost}
+                    category={category}
+                    {...this.props}
+                />}
             </div>
         )
     }
@@ -77,6 +85,7 @@ const mapStateToProps = (state, props) => {
     }
     return {
         posts,
+        category: props.category,
         categories: state.categories
     }
 }

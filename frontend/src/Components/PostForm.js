@@ -7,7 +7,7 @@ class PostForm extends Component {
         title: '',
         body: '',
         author: '',
-        category: 'react'
+        category: this.props.category
     }
 
     onInputChange = (key, ev) => {
@@ -23,23 +23,30 @@ class PostForm extends Component {
         let post = this.state;
         post.id = uuidv1();
         post.timestamp = Date.now();
-        this.props.createPost(post);
-        this.setState({
-            title: '',
-            body: '',
-            author: '',
-            category: 'react'})
-            this.props.history.push(`${post.category}`)
-            // this.props.history.push(`${post.category}/${post.id}`);
+        this.props.createPost(post)
+        .then(  () => {
+            console.log(post)
+            this.props.history.push(`${post.category}/${post.id}`)
+        });
     }
 
     render() {
-        const { categories } = this.props;
-        console.log('this.props.match.params.category',this.props.match.params.category);
+        const { categories, category } = this.props;
         return(
             <div className='post-form'>
                 <h4>Add a new post</h4>
                 <form>
+                    { category === 'all' ?
+                    <div className='select-category'>
+                        <label className='label'>Select category</label>
+                        <select onChange={ this.onSelectChange}>
+                            {categories.map( (cat, i) => (
+                                <option key={i} value={cat.path}>{cat.name}</option>
+                            ))
+                            }
+                        </select>
+                    </div> :
+                    <div> Add a new post in {category}</div> }
                     <input
                         className='input'
                         type="text"
@@ -54,15 +61,6 @@ class PostForm extends Component {
                         placeholder='Author'
                         value={this.state.author}
                         onChange={ this.onInputChange.bind(null, 'author')}/>
-                    <div className='select-category'>
-                        <label className='label'>Category</label>
-                        <select onChange={ this.onSelectChange}>
-                            {categories.map( (cat, i) => (
-                                <option key={i} value={cat.path}>{cat.name}</option>
-                            ))
-                            }
-                        </select>
-                    </div>
                     <textarea
                         className='input-body'
                         type="text"
