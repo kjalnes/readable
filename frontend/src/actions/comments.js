@@ -13,23 +13,16 @@ const receiveComments = (comments) => {
 
 /* maybe not necessary ? maybe rather fetch all the comments all over again after update? */
 
-const updateCommentSuccess = (comment, id) => {
+const updateCommentSuccess = (comment, id, parentId) => {
     return {
         type: UPDATE_COMMENT,
         comment,
-        id
+        id,
+        parentId
     }
 }
 
-//     method: 'post',
-//     body: JSON.stringify({
-//         email: document.getElementById('email').value,
-//         answer: document.getElementById('answer').value
-//     })
-// });
-
-
-const updateComment = (id, option) => (dispatch) => {
+const updateComment = (id, option, parentId) => (dispatch) => {
     return fetch(`${server}/comments/${id}`, {
         method: 'POST',
         body: JSON.stringify({ option: option }),
@@ -41,10 +34,8 @@ const updateComment = (id, option) => (dispatch) => {
     })
     .then( res => res.json())
     .then( data => {
-          return dispatch(updateCommentSuccess(data, id))
+        return dispatch(updateCommentSuccess(data, id, parentId))
     })
-
-
 }
 
 

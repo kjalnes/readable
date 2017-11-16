@@ -3,14 +3,17 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchPosts } from '../actions/posts';
 import { firstLetterUppercase } from '../utils';
+import { sortCollection, parseDate } from '../utils';
+
+
 
 class Posts extends Component {
     state = {
         filter: 'voteScore'
     }
 
-    componentDidMount(props) {
-        this.props.fetchPosts();
+    componentDidMount() {
+        this.props.fetchPosts()
     }
 
     getAllPosts(posts) {
@@ -24,17 +27,6 @@ class Posts extends Component {
     onFilterChange(event) {
         const filter = event.target.value;
         this.setState({filter});
-    }
-
-    sortPosts(posts) {
-        const filter = this.state.filter;
-
-        return posts.sort( (postA, postB) => {
-            if(filter === 'timestamp') {
-                return postA[filter] - postB[filter]
-            }
-            return postB[filter] - postA[filter]
-        })
     }
 
     render() {
@@ -65,9 +57,10 @@ class Posts extends Component {
                         </select>
 
                         <ul>
-                        {this.sortPosts(_posts).map((post, i) => (
+                        {sortCollection(_posts, this.state.filter).map((post, i) => (
                             <li key={i}>
-                                <Link to={`${post.category}/${post.id}`}>{post.title}</Link>
+                                <Link to={`${post.category}/${post.id}`}>
+                                {post.title} - posted on {parseDate(post.timestamp)}</Link>
                             </li>))
                         }
                         </ul>
@@ -81,8 +74,12 @@ class Posts extends Component {
 
 
 const mapStateToProps = (state, props) => {
+    let posts = state.posts;
+    for(var cat in posts) {
+        posts[cat] = sortCollection(posts[cat])
+    }
     return {
-        posts: state.posts
+        posts
     }
 }
 

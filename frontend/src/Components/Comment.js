@@ -8,7 +8,7 @@ const Comment = ({comment, updater}) => {
         <p>{comment.body}</p>
         <p>Vote score: {comment.voteScore}</p>
         <p>{comment.author} commented on {parseDate(comment.timestamp)}</p>
-        {<VoteScore id={comment.id} updater={updater} />}
+        {<VoteScore parentId={comment.parentId} id={comment.id} updater={updater} />}
     </div>
     )
 }

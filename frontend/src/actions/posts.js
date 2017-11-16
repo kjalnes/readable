@@ -48,10 +48,20 @@ const updatePost = (id, option) => (dispatch) => {
     })
 }
 
+const deletePost = (id) => (dispatch) => {
+    return fetch(`${server}/posts/${id}`, {
+        method: 'DELETE',
+        headers: {'Authorization': 'whatever-you-want'}
+    })
+    .then( res => res.json())
+    // refetch updated posts
+    .then( data => dispatch(fetchPosts()))
+}
 
 export {
     RECEIVE_POSTS,
     UPDATE_POST,
     fetchPosts,
-    updatePost
+    updatePost,
+    deletePost
 };

@@ -1,11 +1,18 @@
 import moment from 'moment';
 
-const firstLetterUppercase = (string) => {
-    return string.slice(0,1).toUpperCase() + string.slice(1);
+const firstLetterUppercase = (str) => str.slice(0,1).toUpperCase() + str.slice(1);
+
+const parseDate = (date) => moment(date).format('MMMM Do YYYY');
+
+const sortCollection = (collection, filter) => {
+    filter = filter ? filter : 'voteScore';
+    return collection.sort( (elA, elB) => {
+        return filter === 'timestamp' ?
+            elA[filter] - elB[filter] :
+            elB[filter] - elA[filter]
+    })
 }
 
-const parseDate = (date) => {
-    return moment(date).format('MMMM Do YYYY');
-}
+export { firstLetterUppercase, parseDate, sortCollection }
 
-export { firstLetterUppercase, parseDate }
+

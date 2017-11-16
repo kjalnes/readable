@@ -4,14 +4,28 @@ import { RECEIVE_COMMENTS, UPDATE_COMMENT } from '../actions/comments';
 const commentsReducer = (state=[], action) => {
     switch(action.type) {
         case RECEIVE_COMMENTS:
-            return [...action.comments];
+        const commentsObj = action.comments.reduce((obj, curr) => {
+                if (obj[curr.parentId]) {
+                    obj[curr.parentId].push(curr);
+                } else {
+                    obj[curr.parentId] = [curr];
+                }
+                return obj
+            }, {})
+        return commentsObj
+        // case RECEIVE_COMMENTS:
+        //     return [...action.comments];
         case UPDATE_COMMENT:
-            return state.map( comment => {
+            let parentId = action.parentId;
+            const updatedComments = state[parentId].map( comment => {
                 if(comment.id === action.id) {
-                    return Object.assign({}, action.comment)
+                    return action.comment
                 }
                 return comment
             })
+            let res = Object.assign({}, state);
+            res[parentId] = updatedComments;
+            return res
         default:
             return state;
     }

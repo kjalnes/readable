@@ -1,10 +1,10 @@
 import React from 'react';
 
 
-const VoteScore = ({id, updater}) => {
+const VoteScore = ({ id, updater, parentId}) => {
 
     const voteClick = (vote) => {
-       updater(id, vote)
+       updater(id, vote, parentId)
     }
 
     return (

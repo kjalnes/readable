@@ -1,4 +1,6 @@
 import { RECEIVE_POSTS, UPDATE_POST } from '../actions/posts';
+import { sortCollection } from '../utils';
+
 
 const sortPosts = (posts) => {
     for(var post in posts) {
@@ -6,7 +8,6 @@ const sortPosts = (posts) => {
     }
     return posts;
 }
-
 
 const postsReducer = (state=[], action) => {
     switch(action.type) {
