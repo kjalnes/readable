@@ -1,13 +1,4 @@
 import { RECEIVE_POSTS, UPDATE_POST } from '../actions/posts';
-import { sortCollection } from '../utils';
-
-
-const sortPosts = (posts) => {
-    for(var post in posts) {
-        posts[post] = posts[post].sort((a,b) => b.voteScore - a.voteScore);
-    }
-    return posts;
-}
 
 const postsReducer = (state=[], action) => {
     switch(action.type) {
@@ -20,7 +11,7 @@ const postsReducer = (state=[], action) => {
                 }
                 return obj
             }, {})
-            return sortPosts(postsObj)
+            return postsObj;
         case UPDATE_POST:
             let category = action.post.category;
             const updatedCategory = state[category].map( post => {

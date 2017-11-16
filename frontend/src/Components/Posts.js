@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchPosts } from '../actions/posts';
+import { createPost } from '../actions/posts';
 import { firstLetterUppercase } from '../utils';
 import { sortCollection, parseDate } from '../utils';
-
-
+import PostForm from './PostForm';
 
 class Posts extends Component {
     state = {
@@ -13,7 +13,7 @@ class Posts extends Component {
     }
 
     componentDidMount() {
-        this.props.fetchPosts()
+        this.props.fetchPosts();
     }
 
     getAllPosts(posts) {
@@ -30,30 +30,26 @@ class Posts extends Component {
     }
 
     render() {
-        const { category, posts } = this.props;
+        const { category, posts, categories, createPost } = this.props;
         const _posts = category && category === 'all' ? this.getAllPosts(posts) : posts[category];
         const filters = [
             {name: 'Vote score', key: 'voteScore'},
             {name: 'Timestamp', key: 'timestamp'},
             {name: 'Comments', key: 'commentCount'}];
         return (
-            <div>
-                <h1>
-                    {
-                        category && firstLetterUppercase(category)
-                    }
-                </h1>
-                {
-                    _posts && _posts.length ?
+            <div className='posts-list'>
+                <h1>{category && firstLetterUppercase(category)}</h1>
+                { _posts && _posts.length ?
                     <div>
                         <label>Sort by </label>
                         <select
                             name="select"
                             defaultValue={this.state.filter}
                             onChange={this.onFilterChange.bind(this)}>
-                                {filters.map((filter, i) => (
-                                    <option value={filter.key} key={i}>{filter.name}</option>
-                                ))}
+                            {filters.map((filter, i) => (
+                                <option value={filter.key} key={i}>
+                                    {filter.name}
+                                </option>))}
                         </select>
 
                         <ul>
@@ -65,8 +61,8 @@ class Posts extends Component {
                         }
                         </ul>
                     </div> :
-                    <li>There are no posts in this category yet.</li>
-                }
+                    <div className='none'>There are no posts in this category yet.</div>}
+                {<PostForm categories={categories} createPost={createPost} {...this.props}/>}
             </div>
         )
     }
@@ -75,17 +71,20 @@ class Posts extends Component {
 
 const mapStateToProps = (state, props) => {
     let posts = state.posts;
+    console.log('posts', posts)
     for(var cat in posts) {
         posts[cat] = sortCollection(posts[cat])
     }
     return {
-        posts
+        posts,
+        categories: state.categories
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchPosts: () => dispatch(fetchPosts())
+        fetchPosts: () => dispatch(fetchPosts()),
+        createPost: (payload) => dispatch(createPost(payload))
     }
 }
 

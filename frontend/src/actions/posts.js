@@ -58,10 +58,29 @@ const deletePost = (id) => (dispatch) => {
     .then( data => dispatch(fetchPosts()))
 }
 
+const createPost = (payload) => (dispatch) => {
+    return fetch(`${server}/posts`, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'whatever-you-want'
+        }
+    })
+    .then( res => res.json())
+    .then( data => {
+        console.log('data', data)
+        return dispatch(fetchPosts())
+          // return dispatch(updatePostSuccess(data, id))
+    })
+}
+
 export {
     RECEIVE_POSTS,
     UPDATE_POST,
     fetchPosts,
     updatePost,
-    deletePost
+    deletePost,
+    createPost
 };

@@ -3,6 +3,7 @@ import '../App.css';
 import Header from './Header';
 import Posts from './Posts';
 import Post from './Post';
+import Footer from './Footer';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 import { fetchCategories } from '../actions/categories';
@@ -34,6 +35,7 @@ class App extends Component {
         })}
 
         <Route path='/:category/:id' component={Post} />
+        <Footer />
       </div>
     );
   }
