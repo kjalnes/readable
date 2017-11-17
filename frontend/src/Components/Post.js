@@ -1,18 +1,27 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchComments } from '../actions/comments';
-import { updateComment } from '../actions/comments';
-import { updatePost, deletePost } from '../actions/posts';
+import { fetchComments, updateComment, createComment } from '../actions/comments';
+import { updatePost, deletePost, editPost } from '../actions/posts';
 import { sortCollection, parseDate, firstLetterUppercase }  from '../utils';
 import Comment from './Comment';
 import VoteScore from './VoteScore';
+import PostForm from './PostForm';
+import EditPostForm from './EditPostForm';
+import CommentForm from './CommentForm';
+
 
 class Post extends Component {
-    state = {}
+    state = {
+        editMode: false
+    }
 
     onDeletePost(id) {
         this.props.deletePost(id);
         this.props.history.push("/");
+    }
+
+    toggleEditMode() {
+        this.setState({editMode: !this.state.editMode})
     }
 
     componentDidMount() {
@@ -22,28 +31,49 @@ class Post extends Component {
     render() {
         const {
             post,
+            updatePost,
+            deletePost,
+            editPost,
             comments,
             updateComment,
-            updatePost,
-            deletePost } = this.props;
+            createComment,
+            fetchComments
+             } = this.props;
 
         return (
             <div>
-                <div>
-                    <h2>{post.title}</h2>
-                    <button onClick={()=> this.onDeletePost(post.id)}>Edit</button>
-                    <button onClick={()=> this.onDeletePost(post.id)}>Delete</button>
+                { this.state.editMode ?
+                    <EditPostForm
+                        post={post}
+                        editPost={editPost}
+                        toggleEditMode={this.toggleEditMode.bind(this)}
+                        {...this.props}/> :
+                    <div>
+                    <div>
+                        <h2>{post.title}</h2>
+                        <button onClick={()=> this.toggleEditMode()}>Edit</button>
+                        <button onClick={()=> this.onDeletePost(post.id)}>Delete</button>
+                    </div>
+                    <p>{post.body}</p>
+                    <br />
+                    <p>Written by {firstLetterUppercase(post.author)} | Posted on {parseDate(post.timestamp)}</p>
+                    <p>Comments: {post.commentCount}</p>
+                    <p>Vote score: {post.voteScore}</p>
+                    {<VoteScore id={post.id} updater={updatePost} />}
+                    {comments && comments.length ?
+                        <div>
+                            <h3>Comments</h3>
+                            {sortCollection(comments).map( (comment, i) => (
+                                <Comment key={i} comment={comment} updater={updateComment}/>
+                            ))}
+                        </div>
+                     : <div>There are no comments to this post yet.</div> }
+                     <CommentForm
+                        parentId={post.id}
+                        createComment={createComment}
+                        fetchComments={fetchComments}/>
                 </div>
-                <p>{post.body}</p>
-                <p>Written by {firstLetterUppercase(post.author)} | Posted on {parseDate(post.timestamp)}</p>
-                <p>Comments: {post.commentCount}</p>
-                <p>Vote score: {post.voteScore}</p>
-                {<VoteScore id={post.id} updater={updatePost} />}
-                {comments && comments.length ?
-                    sortCollection(comments).map( (comment, i) => (
-                        <Comment key={i} comment={comment} updater={updateComment}/>
-                    ))
-                 : <div>There are no comments to this post yet.</div> }
+                }
             </div>
         )
     }
@@ -64,8 +94,10 @@ const mapDispatchToProps = (dispatch) => {
     return {
         updatePost: (id, option) => dispatch(updatePost(id, option)),
         deletePost: (id) => dispatch(deletePost(id)),
+        editPost: (id, updates) => dispatch(editPost(id, updates)),
         fetchComments: (id) => dispatch(fetchComments(id)),
-        updateComment: (parentId, id, option) => dispatch(updateComment(parentId, id, option))
+        updateComment: (parentId, id, option) => dispatch(updateComment(parentId, id, option)),
+        createComment: (comment) => dispatch(createComment(comment))
     }
 }
 

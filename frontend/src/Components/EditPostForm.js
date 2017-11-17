@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import uuidv1 from 'uuid/v1';
 
 
-class PostForm extends Component {
+class EditPostForm extends Component {
     state = {
         title: '',
         body: '',
         author: '',
-        category: this.props.category
+        category: ''
     }
 
     onInputChange = (key, ev) => {
@@ -19,34 +18,34 @@ class PostForm extends Component {
         this.setState({category: ev.target.value})
     }
 
-    onPostSubmit = (ev) => {
+    onEditPostSubmit = (ev) => {
         ev.preventDefault();
-        let post = this.state;
-        post.id = uuidv1();
-        post.timestamp = Date.now();
-        this.props.createPost(post)
-        .then(  () => {
-            this.props.history.push(`${post.category}/${post.id}`)
-        });
+        let post = Object.assign({}, this.props.post, this.state);
+        this.props.editPost(post.id, post)
+        .then(() => this.props.toggleEditMode())
+    }
+
+    componentDidMount() {
+        this.setState(this.props.post);
     }
 
     render() {
-        const { categories, category } = this.props;
+        const { categories, post } = this.props;
         return(
             <div className='post-form'>
-                <h4>Add a new post</h4>
+                <h4>Edit post</h4>
                 <form>
-                    { category === 'all' ?
                     <div className='select-category'>
                         <label className='label'>Select category</label>
-                        <select onChange={ this.onSelectChange}>
-                            {categories.map( (cat, i) => (
+                        <select
+                            onChange={ this.onSelectChange}
+                            value={this.state.category}>
+                            {categories.map((cat, i) => (
                                 <option key={i} value={cat.path}>{cat.name}</option>
                             ))
                             }
                         </select>
-                    </div> :
-                    <div> Add a new post in {category}</div> }
+                    </div>
                     <input
                         className='input'
                         type="text"
@@ -67,7 +66,7 @@ class PostForm extends Component {
                         name='body'
                         value={this.state.body}
                         onChange={ this.onInputChange.bind(null, 'body')}/>
-                    <button onClick={this.onPostSubmit}>Post</button>
+                    <button onClick={this.onEditPostSubmit}>Edit Post</button>
                 </form>
             </div>
         )
@@ -80,4 +79,4 @@ const mapStateToProps = (state, props) => {
     }
 }
 
-export default connect(mapStateToProps)(PostForm);
+export default connect(mapStateToProps)(EditPostForm);

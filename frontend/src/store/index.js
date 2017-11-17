@@ -9,10 +9,11 @@ let store;
 
 // only include redux-immutable-state-invariant in dev mode
 
-const middleware = process.env.NODE_ENV !== 'production' ?
-  [require('redux-immutable-state-invariant').default(), thunk] :
-  [thunk];
+// const middleware = process.env.NODE_ENV !== 'production' ?
+  // [require('redux-immutable-state-invariant').default(), thunk] :
+  // [thunk];
 
+const middleware = [thunk]
 
 if (reduxDevtools) {
     store = createStore(rootReducer, reduxDevtools(applyMiddleware(...middleware)));

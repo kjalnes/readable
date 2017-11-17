@@ -69,11 +69,21 @@ const createPost = (payload) => (dispatch) => {
         }
     })
     .then( res => res.json())
-    .then( data => {
-        // console.log('data', data)
-        return dispatch(fetchPosts())
-          // return dispatch(updatePostSuccess(data, id))
+    .then( data => dispatch(fetchPosts()))
+}
+
+const editPost = (id, payload) => (dispatch) => {
+    return fetch(`${server}/posts/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(payload),
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'whatever-you-want'
+        }
     })
+    .then( res => res.json())
+    .then( data => dispatch(fetchPosts()))
 }
 
 export {
@@ -82,5 +92,6 @@ export {
     fetchPosts,
     updatePost,
     deletePost,
-    createPost
+    createPost,
+    editPost
 };
