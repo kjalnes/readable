@@ -10,6 +10,7 @@ class Comments extends Component {
     }
 
     toggleEditMode(id) {
+        this.props.toggleShowCommentForm();
         this.setState({editMode: !this.state.editMode});
         if(id) {
             const editedComment = this.props.comments.filter( comment => comment.id === id)[0]
@@ -20,7 +21,7 @@ class Comments extends Component {
     }
 
     render() {
-        const { comments, voteComment, editComment } = this.props;
+        const { comments, voteComment, editComment, deleteComment } = this.props;
         return (
             <div>
             { this.state.editMode  ?
@@ -37,6 +38,7 @@ class Comments extends Component {
                             key={i}
                             comment={comment}
                             voteComment={voteComment}
+                            deleteComment={deleteComment}
                             toggleEditMode={this.toggleEditMode.bind(this)}/>
                     ))}
                 </div>

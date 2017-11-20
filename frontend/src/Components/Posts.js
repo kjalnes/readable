@@ -12,10 +12,6 @@ class Posts extends Component {
         filter: 'voteScore'
     }
 
-    componentDidMount() {
-        this.props.fetchPosts();
-    }
-
     getAllPosts(posts) {
         let postsCollection = [];
         for(var category in posts) {
@@ -27,6 +23,10 @@ class Posts extends Component {
     onFilterChange(event) {
         const filter = event.target.value;
         this.setState({filter});
+    }
+
+    componentDidMount() {
+        this.props.fetchPosts();
     }
 
     render() {

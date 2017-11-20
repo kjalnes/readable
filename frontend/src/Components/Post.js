@@ -4,7 +4,8 @@ import {
     fetchComments,
     voteComment,
     createComment,
-    editComment } from '../actions/comments';
+    editComment,
+    deleteComment } from '../actions/comments';
 import { updatePost, deletePost, editPost } from '../actions/posts';
 import { parseDate, firstLetterUppercase }  from '../utils';
 import Comments from './Comments';
@@ -17,7 +18,8 @@ import CommentForm from './CommentForm';
 
 class Post extends Component {
     state = {
-        editMode: false
+        editMode: false,
+        showCommentForm: true
     }
 
     onDeletePost(id) {
@@ -27,6 +29,10 @@ class Post extends Component {
 
     toggleEditMode() {
         this.setState({editMode: !this.state.editMode})
+    }
+
+    toggleShowCommentForm() {
+        this.setState({showCommentForm: !this.state.showCommentForm})
     }
 
     componentDidMount() {
@@ -43,18 +49,19 @@ class Post extends Component {
             voteComment,
             createComment,
             fetchComments,
-            editComment
+            editComment,
+            deleteComment
              } = this.props;
 
         return (
             <div>
-                { this.state.editMode ?
-                    <EditPostForm
-                        post={post}
-                        editPost={editPost}
-                        toggleEditMode={this.toggleEditMode.bind(this)}
-                        {...this.props}/> :
-                    <div>
+                {this.state.editMode ?
+                <EditPostForm
+                    post={post}
+                    editPost={editPost}
+                    toggleEditMode={this.toggleEditMode.bind(this)}
+                    {...this.props}/> :
+                <div>
                     <div>
                         <h2>{post.title}</h2>
                         <button onClick={()=> this.toggleEditMode()}>Edit</button>
@@ -67,17 +74,20 @@ class Post extends Component {
                     <p>Vote score: {post.voteScore}</p>
                     {<VoteScore id={post.id} updater={updatePost} />}
                     {comments && comments.length ?
-                        <Comments
-                            comments={comments}
-                            voteComment={voteComment}
-                            editComment={editComment}/> :
-                        <div>There are no comments to this post yet.</div>}
-                     <CommentForm
-                        parentId={post.id}
-                        createComment={createComment}
-                        fetchComments={fetchComments}/>
+                    <Comments
+                        comments={comments}
+                        voteComment={voteComment}
+                        editComment={editComment}
+                        deleteComment={deleteComment}
+                        toggleShowCommentForm={this.toggleShowCommentForm.bind(this)}/> :
+                    <div>There are no comments to this post yet.</div>}
                 </div>
                 }
+                {this.state.showCommentForm ?
+                <CommentForm
+                    parentId={post.id}
+                    createComment={createComment}
+                    fetchComments={fetchComments}/> : null}
             </div>
         )
     }
@@ -102,7 +112,8 @@ const mapDispatchToProps = (dispatch) => {
         fetchComments: (id) => dispatch(fetchComments(id)),
         voteComment: (parentId, id, option) => dispatch(voteComment(parentId, id, option)),
         createComment: (comment) => dispatch(createComment(comment)),
-        editComment: (id, comment) => dispatch(editComment(id, comment))
+        editComment: (id, comment) => dispatch(editComment(id, comment)),
+        deleteComment: (id) => dispatch(deleteComment(id))
     }
 }
 

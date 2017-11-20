@@ -1,6 +1,7 @@
 // constants
 const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS';
 const UPDATE_COMMENT = 'UPDATE_COMMENT';
+const DELETE_COMMENT = 'DELETE_COMMENT';
 
 const server = process.env.REACT_APP_BACKEND || 'http://localhost:3001';
 
@@ -43,14 +44,10 @@ const voteComment = (id, option, parentId) => (dispatch) => {
         }
     })
     .then( res => res.json())
-    .then( data => {
-        return dispatch(updateCommentSuccess(data, id, parentId))
-    })
+    .then( data => dispatch(updateCommentSuccess(data, id, parentId)))
 }
 
 const editComment = (id, payload) => (dispatch) => {
-    console.log('id', id)
-    console.log('payload', payload)
     return fetch(`${server}/comments/${id}`, {
         method: 'PUT',
         body: JSON.stringify(payload),
@@ -61,17 +58,10 @@ const editComment = (id, payload) => (dispatch) => {
         }
     })
     .then( res => res.json())
-    .then( data => {
-        // console.log('data from editComment in actions', data)
-        return dispatch(updateCommentSuccess(data, id, data.parentId))
-    })
+    .then( data => dispatch(updateCommentSuccess(data, id, data.parentId)))
 }
 
-
-
-
 const createComment = (payload) => (dispatch) => {
-    console.log('payload', payload)
     return fetch(`${server}/comments`, {
         method: 'POST',
         body: JSON.stringify(payload),
@@ -82,17 +72,26 @@ const createComment = (payload) => (dispatch) => {
         }
     })
     .then( res => res.json())
-    .then( data => {
-        return dispatch(fetchComments())
-        // console.log('data from post comment', data)
-    })
+    .then( data => dispatch(fetchComments()))
 }
+
+const deleteComment = (id) => (dispatch) => {
+    return fetch(`${server}/comments/${id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': 'whatever-you-want' }
+    })
+    .then( res => res.json())
+    .then( data => dispatch(fetchComments(data.parentId)))
+}
+
 
 export {
     RECEIVE_COMMENTS,
     UPDATE_COMMENT,
+    DELETE_COMMENT,
     fetchComments,
     voteComment,
     createComment,
-    editComment
+    editComment,
+    deleteComment
 };

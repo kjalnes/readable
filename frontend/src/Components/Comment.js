@@ -1,26 +1,22 @@
-import React, { Component } from 'react';
+import React from 'react';
 import VoteScore from './VoteScore';
-// import EditCommentForm from './EditCommentForm';
 import { parseDate, firstLetterUppercase } from '../utils';
 
 
+const Comment = ({ comment, voteComment, deleteComment, toggleEditMode }) => {
 
-class Comment extends Component  {
-    render() {
-        const { comment, voteComment, toggleEditMode } = this.props;
-        return (
-            <div>
-                <div className='comment-box'>
-                    <p>{comment.body}</p>
-                    <p>Vote score: {comment.voteScore}</p>
-                    <p>{firstLetterUppercase(comment.author)} commented on {parseDate(comment.timestamp)}</p>
-                    {<VoteScore parentId={comment.parentId} id={comment.id} updater={voteComment} />}
-                    <button onClick={()=> toggleEditMode(comment.id)}>Edit</button>
-
-                </div>
+    return (
+        <div>
+            <div className='comment-box'>
+                <p>{comment.body}</p>
+                <p>Vote score: {comment.voteScore}</p>
+                <p>{firstLetterUppercase(comment.author)} commented on {parseDate(comment.timestamp)}</p>
+                {<VoteScore parentId={comment.parentId} id={comment.id} updater={voteComment} />}
+                <button onClick={()=> toggleEditMode(comment.id)}>Edit</button>
+                <button onClick={()=> deleteComment(comment.id) }>Delete</button>
             </div>
-        )
-    }
+        </div>
+    )
 }
 
 
