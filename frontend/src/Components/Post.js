@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchComments, updateComment, createComment } from '../actions/comments';
+import {
+    fetchComments,
+    voteComment,
+    createComment,
+    editComment } from '../actions/comments';
 import { updatePost, deletePost, editPost } from '../actions/posts';
-import { sortCollection, parseDate, firstLetterUppercase }  from '../utils';
+import { parseDate, firstLetterUppercase }  from '../utils';
+import Comments from './Comments';
 import Comment from './Comment';
 import VoteScore from './VoteScore';
 import PostForm from './PostForm';
@@ -35,9 +40,10 @@ class Post extends Component {
             deletePost,
             editPost,
             comments,
-            updateComment,
+            voteComment,
             createComment,
-            fetchComments
+            fetchComments,
+            editComment
              } = this.props;
 
         return (
@@ -61,13 +67,11 @@ class Post extends Component {
                     <p>Vote score: {post.voteScore}</p>
                     {<VoteScore id={post.id} updater={updatePost} />}
                     {comments && comments.length ?
-                        <div>
-                            <h3>Comments</h3>
-                            {sortCollection(comments).map( (comment, i) => (
-                                <Comment key={i} comment={comment} updater={updateComment}/>
-                            ))}
-                        </div>
-                     : <div>There are no comments to this post yet.</div> }
+                        <Comments
+                            comments={comments}
+                            voteComment={voteComment}
+                            editComment={editComment}/> :
+                        <div>There are no comments to this post yet.</div>}
                      <CommentForm
                         parentId={post.id}
                         createComment={createComment}
@@ -96,8 +100,9 @@ const mapDispatchToProps = (dispatch) => {
         deletePost: (id) => dispatch(deletePost(id)),
         editPost: (id, updates) => dispatch(editPost(id, updates)),
         fetchComments: (id) => dispatch(fetchComments(id)),
-        updateComment: (parentId, id, option) => dispatch(updateComment(parentId, id, option)),
-        createComment: (comment) => dispatch(createComment(comment))
+        voteComment: (parentId, id, option) => dispatch(voteComment(parentId, id, option)),
+        createComment: (comment) => dispatch(createComment(comment)),
+        editComment: (id, comment) => dispatch(editComment(id, comment))
     }
 }
 

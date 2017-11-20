@@ -86,6 +86,7 @@ const editPost = (id, payload) => (dispatch) => {
     .then( data => dispatch(fetchPosts()))
 }
 
+
 export {
     RECEIVE_POSTS,
     UPDATE_POST,

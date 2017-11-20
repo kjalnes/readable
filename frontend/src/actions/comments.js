@@ -32,7 +32,7 @@ const updateCommentSuccess = (comment, id, parentId) => {
     }
 }
 
-const updateComment = (id, option, parentId) => (dispatch) => {
+const voteComment = (id, option, parentId) => (dispatch) => {
     return fetch(`${server}/comments/${id}`, {
         method: 'POST',
         body: JSON.stringify({ option: option }),
@@ -47,6 +47,28 @@ const updateComment = (id, option, parentId) => (dispatch) => {
         return dispatch(updateCommentSuccess(data, id, parentId))
     })
 }
+
+const editComment = (id, payload) => (dispatch) => {
+    console.log('id', id)
+    console.log('payload', payload)
+    return fetch(`${server}/comments/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(payload),
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'whatever-you-want'
+        }
+    })
+    .then( res => res.json())
+    .then( data => {
+        // console.log('data from editComment in actions', data)
+        return dispatch(updateCommentSuccess(data, id, data.parentId))
+    })
+}
+
+
+
 
 const createComment = (payload) => (dispatch) => {
     console.log('payload', payload)
@@ -70,6 +92,7 @@ export {
     RECEIVE_COMMENTS,
     UPDATE_COMMENT,
     fetchComments,
-    updateComment,
-    createComment
+    voteComment,
+    createComment,
+    editComment
 };

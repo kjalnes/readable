@@ -30,7 +30,7 @@ class Posts extends Component {
     }
 
     render() {
-        const { category, categories, createPost } = this.props;
+        const { category, createPost } = this.props;
         const posts = category && category === 'all' ?
              this.getAllPosts(this.props.posts) :
              this.props.posts[category];
@@ -84,8 +84,7 @@ const mapStateToProps = (state, props) => {
     }
     return {
         posts,
-        category: props.category,
-        categories: state.categories
+        category: props.category
     }
 }
 
