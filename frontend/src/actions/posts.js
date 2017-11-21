@@ -1,6 +1,4 @@
-// constants
-const RECEIVE_POSTS = 'RECEIVE_POSTS';
-const UPDATE_POST = 'UPDATE_POST';
+import { RECEIVE_POSTS, UPDATE_POST } from '../constants';
 
 const server = process.env.REACT_APP_BACKEND || 'http://localhost:3001';
 
@@ -54,7 +52,6 @@ const deletePost = (id) => (dispatch) => {
         headers: {'Authorization': 'whatever-you-want'}
     })
     .then( res => res.json())
-    // refetch updated posts
     .then( data => dispatch(fetchPosts()))
 }
 
@@ -88,8 +85,6 @@ const editPost = (id, payload) => (dispatch) => {
 
 
 export {
-    RECEIVE_POSTS,
-    UPDATE_POST,
     fetchPosts,
     updatePost,
     deletePost,

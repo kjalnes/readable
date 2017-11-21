@@ -1,5 +1,4 @@
-import { RECEIVE_COMMENTS, UPDATE_COMMENT } from '../actions/comments';
-
+import { RECEIVE_COMMENTS, UPDATE_COMMENT } from '../constants';
 
 const commentsReducer = (state=[], action) => {
     switch(action.type) {
@@ -13,8 +12,6 @@ const commentsReducer = (state=[], action) => {
                 return obj
             }, {})
         return commentsObj
-        // case RECEIVE_COMMENTS:
-        //     return [...action.comments];
         case UPDATE_COMMENT:
             let parentId = action.parentId;
             const updatedComments = state[parentId].map( comment => {

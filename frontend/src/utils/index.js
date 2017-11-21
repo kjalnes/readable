@@ -7,9 +7,9 @@ const parseDate = (date) => moment(date).format('MMMM Do YYYY');
 const sortCollection = (collection, filter) => {
     filter = filter ? filter : 'voteScore';
     return collection.sort( (elA, elB) => {
-        return filter === 'timestamp' ?
-            elA[filter] - elB[filter] :
-            elB[filter] - elA[filter]
+        // return filter === 'timestamp' ?
+            // elA[filter] - elB[filter] :
+          return  elB[filter] - elA[filter]
     })
 }
 

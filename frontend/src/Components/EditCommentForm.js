@@ -46,5 +46,4 @@ class EditCommentForm extends Component {
     }
 }
 
-
 export default EditCommentForm;

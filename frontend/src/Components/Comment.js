@@ -4,7 +4,6 @@ import { parseDate, firstLetterUppercase } from '../utils';
 
 
 const Comment = ({ comment, voteComment, deleteComment, toggleEditMode }) => {
-
     return (
         <div>
             <div className='comment-box'>
@@ -18,8 +17,5 @@ const Comment = ({ comment, voteComment, deleteComment, toggleEditMode }) => {
         </div>
     )
 }
-
-
-
 
 export default Comment;

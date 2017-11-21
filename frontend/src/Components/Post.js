@@ -9,9 +9,7 @@ import {
 import { updatePost, deletePost, editPost } from '../actions/posts';
 import { parseDate, firstLetterUppercase }  from '../utils';
 import Comments from './Comments';
-import Comment from './Comment';
 import VoteScore from './VoteScore';
-import PostForm from './PostForm';
 import EditPostForm from './EditPostForm';
 import CommentForm from './CommentForm';
 
@@ -94,9 +92,7 @@ const mapStateToProps = (state, props) => {
     const category = props.match.params.category;
     const id = props.match.params.id;
     const post = state.posts[category].filter( _post => _post.id === id)[0];
-    // const comments = state.comments ? state.comments[post.id] : null;
     const comments = state.comments ? state.comments[id] : null;
-
     return {
         post,
         comments

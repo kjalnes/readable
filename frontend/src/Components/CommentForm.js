@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import uuidv1 from 'uuid/v1';
 
 class CommentForm extends Component {
@@ -22,7 +21,6 @@ class CommentForm extends Component {
         .then(() => this.props.fetchComments(comment.parentId))
         .then(() => this.setState({body: '', author: ''}));
     }
-
 
     render() {
         return(

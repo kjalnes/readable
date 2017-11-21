@@ -1,8 +1,6 @@
-// constants
-const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES';
+import { RECEIVE_CATEGORIES } from '../constants';
 
 const server = process.env.REACT_APP_BACKEND || 'http://localhost:3001';
-
 
 // actions
 const receiveCategories = (categories) => {
@@ -25,7 +23,4 @@ const fetchCategories = () => (dispatch) => {
         })
 }
 
-export {
-    RECEIVE_CATEGORIES,
-    fetchCategories
-};
+export { fetchCategories };

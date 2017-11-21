@@ -1,4 +1,4 @@
-import { RECEIVE_POSTS, UPDATE_POST } from '../actions/posts';
+import { RECEIVE_POSTS, UPDATE_POST } from '../constants';
 
 const postsReducer = (state=[], action) => {
     switch(action.type) {

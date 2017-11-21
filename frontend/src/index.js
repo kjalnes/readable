@@ -7,7 +7,6 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store';
 
-// is there a way to generate the routes for example categories dynamically here using data fetched from the backend ?
 
 ReactDOM.render(
     <Provider store={store}>

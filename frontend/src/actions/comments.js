@@ -1,7 +1,4 @@
-// constants
-const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS';
-const UPDATE_COMMENT = 'UPDATE_COMMENT';
-const DELETE_COMMENT = 'DELETE_COMMENT';
+import { RECEIVE_COMMENTS, UPDATE_COMMENT, DELETE_COMMENT } from '../constants';
 
 const server = process.env.REACT_APP_BACKEND || 'http://localhost:3001';
 
@@ -86,9 +83,6 @@ const deleteComment = (id) => (dispatch) => {
 
 
 export {
-    RECEIVE_COMMENTS,
-    UPDATE_COMMENT,
-    DELETE_COMMENT,
     fetchComments,
     voteComment,
     createComment,

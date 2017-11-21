@@ -1,4 +1,4 @@
-import { RECEIVE_CATEGORIES } from '../actions/categories';
+import { RECEIVE_CATEGORIES } from '../constants';
 
 const categoriesReducer = (state=[], action) => {
     switch(action.type) {

@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 const VoteScore = ({ id, updater, parentId}) => {
 
     const voteClick = (vote) => {
@@ -12,7 +11,6 @@ const VoteScore = ({ id, updater, parentId}) => {
             <button onClick={ () => voteClick('upVote')}>Upvote</button>
             <button onClick={ () => voteClick('downVote')}>Downvote</button>
         </span>
-
     )
 }
 

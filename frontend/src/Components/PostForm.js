@@ -86,9 +86,7 @@ class PostForm extends Component {
 }
 
 const mapStateToProps = (state, props) => {
-    return {
-        categories: state.categories
-    }
+    return { categories: state.categories }
 }
 
 export default connect(mapStateToProps)(PostForm);

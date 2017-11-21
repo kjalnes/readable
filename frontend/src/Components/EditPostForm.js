@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-
 
 class EditPostForm extends Component {
     state = {
@@ -29,7 +27,6 @@ class EditPostForm extends Component {
     }
 
     render() {
-        const { categories, post } = this.props;
         return(
             <div className='post-form'>
                 <h4>Edit post</h4>
@@ -61,10 +58,4 @@ class EditPostForm extends Component {
     }
 }
 
-const mapStateToProps = (state, props) => {
-    return {
-        categories: state.categories
-    }
-}
-
-export default connect(mapStateToProps)(EditPostForm);
+export default EditPostForm;
