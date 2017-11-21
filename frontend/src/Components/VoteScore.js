@@ -8,10 +8,10 @@ const VoteScore = ({ id, updater, parentId}) => {
     }
 
     return (
-        <div>
+        <span>
             <button onClick={ () => voteClick('upVote')}>Upvote</button>
             <button onClick={ () => voteClick('downVote')}>Downvote</button>
-        </div>
+        </span>
 
     )
 }

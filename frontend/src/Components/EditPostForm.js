@@ -6,8 +6,7 @@ class EditPostForm extends Component {
     state = {
         title: '',
         body: '',
-        author: '',
-        category: ''
+        author: ''
     }
 
     onInputChange = (key, ev) => {
@@ -35,17 +34,6 @@ class EditPostForm extends Component {
             <div className='post-form'>
                 <h4>Edit post</h4>
                 <form>
-                    <div className='select-category'>
-                        <label className='label'>Select category</label>
-                        <select
-                            onChange={ this.onSelectChange}
-                            value={this.state.category}>
-                            {categories.map((cat, i) => (
-                                <option key={i} value={cat.path}>{cat.name}</option>
-                            ))
-                            }
-                        </select>
-                    </div>
                     <input
                         className='input'
                         type="text"

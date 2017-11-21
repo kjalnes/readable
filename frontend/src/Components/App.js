@@ -57,11 +57,3 @@ const mapStateToProps = (state, props) => {
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
 
-// <Link to={{
-//   pathname: '/courses',
-//   search: '?sort=name',
-//   hash: '#the-hash',
-//   state: { fromDashboard: true }
-// }}>
-//   Courses
-// </Link>

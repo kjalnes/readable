@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import uuidv1 from 'uuid/v1';
+import { firstLetterUppercase } from '../utils';
 
 
 class PostForm extends Component {
@@ -30,23 +31,33 @@ class PostForm extends Component {
         });
     }
 
+    componentDidMount() {
+        // set default category to 'react'
+        if(this.props.category === 'all') {
+            this.setState({category: 'react'})
+        }
+    }
+
     render() {
         const { categories, category } = this.props;
         return(
             <div className='post-form'>
-                <h4>Add a new post</h4>
+
                 <form>
                     { category === 'all' ?
-                    <div className='select-category'>
-                        <label className='label'>Select category</label>
-                        <select onChange={ this.onSelectChange}>
-                            {categories.map( (cat, i) => (
-                                <option key={i} value={cat.path}>{cat.name}</option>
-                            ))
-                            }
-                        </select>
+                    <div>
+                        <h4>Add a new post</h4>
+                        <div className='select-category'>
+                            <label className='label'>Select category</label>
+                            <select onChange={ this.onSelectChange}>
+                                {categories.map( (cat, i) => (
+                                    <option key={i} value={cat.path}>{cat.name}</option>
+                                ))
+                                }
+                            </select>
+                        </div>
                     </div> :
-                    <div> Add a new post in {category}</div> }
+                    <h4> Add a new post to {firstLetterUppercase(category)}</h4> }
                     <input
                         className='input'
                         type="text"

@@ -62,17 +62,14 @@ class Post extends Component {
                     toggleEditMode={this.toggleEditMode.bind(this)}
                     {...this.props}/> :
                 <div>
-                    <div>
-                        <h2>{post.title}</h2>
-                        <button onClick={()=> this.toggleEditMode()}>Edit</button>
-                        <button onClick={()=> this.onDeletePost(post.id)}>Delete</button>
-                    </div>
+                    <h2>{post.title}</h2>
                     <p>{post.body}</p>
                     <br />
                     <p>Written by {firstLetterUppercase(post.author)} | Posted on {parseDate(post.timestamp)}</p>
-                    <p>Comments: {post.commentCount}</p>
-                    <p>Vote score: {post.voteScore}</p>
+                    <p>Comments: {post.commentCount} | Vote score: {post.voteScore}</p>
                     {<VoteScore id={post.id} updater={updatePost} />}
+                    <button onClick={()=> this.toggleEditMode()}>Edit</button>
+                    <button onClick={()=> this.onDeletePost(post.id)}>Delete</button>
                     {comments && comments.length ?
                     <Comments
                         comments={comments}
@@ -80,14 +77,14 @@ class Post extends Component {
                         editComment={editComment}
                         deleteComment={deleteComment}
                         toggleShowCommentForm={this.toggleShowCommentForm.bind(this)}/> :
-                    <div>There are no comments to this post yet.</div>}
-                </div>
-                }
+                    <div className='no-comments-box'>There are no comments to this post yet.</div>}
                 {this.state.showCommentForm ?
                 <CommentForm
                     parentId={post.id}
                     createComment={createComment}
                     fetchComments={fetchComments}/> : null}
+                </div>
+                }
             </div>
         )
     }
@@ -97,7 +94,9 @@ const mapStateToProps = (state, props) => {
     const category = props.match.params.category;
     const id = props.match.params.id;
     const post = state.posts[category].filter( _post => _post.id === id)[0];
-    const comments = state.comments ? state.comments[post.id] : null;
+    // const comments = state.comments ? state.comments[post.id] : null;
+    const comments = state.comments ? state.comments[id] : null;
+
     return {
         post,
         comments

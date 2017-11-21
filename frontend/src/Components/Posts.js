@@ -43,7 +43,7 @@ class Posts extends Component {
                 <h1>{category && firstLetterUppercase(category)}</h1>
                 { posts && posts.length ?
                 <div>
-                    <label>Sort by </label>
+                    <label>Sorted by </label>
                     <select
                         name="select"
                         defaultValue={this.state.filter}

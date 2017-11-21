@@ -36,10 +36,6 @@ img.App-logo-1 {
   height: 100px;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
 
 ul.nav {
     background-color: lightgoldenrodyellow;
@@ -65,16 +61,26 @@ li {
     list-style: none;
 }
 
-
-
 .comment-box {
     border: 1px solid lightgray;
     width: 50%;
     text-align: left;
     margin: 0 auto;
     font-size: 13px;
-    padding: 4px 37px;
+    padding: 23px;
 }
+
+p.comment-body {
+    font-size: 20px;
+}
+
+.no-comments-box {
+    background-color: azure;
+    width: 50%;
+    padding: 30px;
+    margin: 30px auto;
+}
+
 
 .post-form {
     width: 320px;
@@ -114,6 +120,7 @@ textarea.input-body {
 
 button {
     padding: 0 10px;
+    margin: 3px;
     font-size: 20px;
     background-color: cornsilk;
 }

@@ -31,7 +31,11 @@ class Header extends Component {
               <p className="App-intro">Udacity Project</p>
               <ul className='nav'>
                 {categories.map((cat, i) => {
-                const linkClass = path === cat.path ? 'active' : '';
+                let linkClass = path.indexOf(cat.path) > -1 && cat.path !== '' ? 'active' : '';
+                if(cat.path === '' && path === '') {
+                  linkClass = 'active'
+                }
+
                 return (
                     <li key={i} className='nav-tabs'>
                       <Link

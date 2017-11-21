@@ -19,7 +19,8 @@ class CommentForm extends Component {
         comment.timestamp = Date.now();
         comment.parentId = this.props.parentId;
         this.props.createComment(comment)
-        .then(() => this.props.fetchComments(comment.parentId));
+        .then(() => this.props.fetchComments(comment.parentId))
+        .then(() => this.setState({body: '', author: ''}));
     }
 
 
