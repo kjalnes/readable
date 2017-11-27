@@ -1,4 +1,5 @@
 import { RECEIVE_COMMENTS, UPDATE_COMMENT, DELETE_COMMENT } from '../constants';
+import { fetchPost } from './posts';
 
 const server = process.env.REACT_APP_BACKEND || 'http://localhost:3001';
 
@@ -69,7 +70,10 @@ const createComment = (payload) => (dispatch) => {
         }
     })
     .then( res => res.json())
-    .then( data => dispatch(fetchComments()))
+    .then( data => {
+        dispatch(fetchComments());
+        dispatch(fetchPost(data.parentId));
+    })
 }
 
 const deleteComment = (id) => (dispatch) => {
@@ -78,7 +82,10 @@ const deleteComment = (id) => (dispatch) => {
         headers: { 'Authorization': 'whatever-you-want' }
     })
     .then( res => res.json())
-    .then( data => dispatch(fetchComments(data.parentId)))
+    .then( data => {
+        dispatch(fetchComments(data.parentId));
+        dispatch(fetchPost(data.parentId));
+    })
 }
 
 

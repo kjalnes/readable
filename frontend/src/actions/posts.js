@@ -12,15 +12,25 @@ const receivePosts = (posts) => {
 
 // action async method
 const fetchPosts = () => (dispatch) => {
-    return fetch(`${server}/posts`,
-        {
+    return fetch(`${server}/posts`, {
             headers: { 'Authorization': 'whatever-you-want' }
         })
-        .then( (res) => res.text() )
-        .then( data => {
-            data = JSON.parse(data);
-            return dispatch(receivePosts(data))
-        })
+    .then( (res) => res.text() )
+    .then( data => {
+        data = JSON.parse(data);
+        return dispatch(receivePosts(data))
+    })
+}
+
+const fetchPost = (id) => (dispatch) => {
+    return fetch(`${server}/posts/${id}`, {
+        headers: { 'Authorization': 'whatever-you-want' }
+    })
+    .then( (res) => res.text() )
+    .then( data => {
+        data = JSON.parse(data);
+        return dispatch(updatePostSuccess(data, id))
+    })
 }
 
 const updatePostSuccess = (post) => {
@@ -86,6 +96,7 @@ const editPost = (id, payload) => (dispatch) => {
 
 export {
     fetchPosts,
+    fetchPost,
     updatePost,
     deletePost,
     createPost,

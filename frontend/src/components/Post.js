@@ -26,18 +26,18 @@ class Post extends Component {
     }
 
     toggleEditMode() {
-        this.setState({editMode: !this.state.editMode})
+        this.setState({editMode: !this.state.editMode});
     }
 
     toggleShowCommentForm() {
-        this.setState({showCommentForm: !this.state.showCommentForm})
+        this.setState({showCommentForm: !this.state.showCommentForm});
     }
 
     componentDidMount() {
         if(this.props.location.state && this.props.location.state.editMode) {
-            this.setState({editMode: this.props.location.state.editMode})
+            this.setState({editMode: this.props.location.state.editMode});
         }
-        this.props.fetchComments(this.props.post.id)
+        this.props.fetchComments(this.props.post.id);
     }
 
     render() {
