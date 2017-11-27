@@ -29,9 +29,14 @@ class Posts extends Component {
 
     onDeletePost(id) {
         this.props.deletePost(id);
-        // this.props.history.push("/");
     }
 
+    goToPostAndEditMode(category, id) {
+        this.props.history.push({
+            pathname: `${category}/${id}`,
+            state: { editMode: true }
+        })
+    }
 
     componentDidMount() {
         this.props.fetchPosts();
@@ -63,20 +68,20 @@ class Posts extends Component {
                     </select>
 
                     <ul>
-                     for editing and deleting the post.
                     {sortCollection(posts, this.state.filter).map((post, i) => (
                         <li key={i}>
                             <Link to={`${post.category}/${post.id}`}>
                                 {post.title}
                             </Link>
+                            <button onClick={()=> this.goToPostAndEditMode(post.category, post.id)}>Edit</button>
+                            <button onClick={()=> this.onDeletePost(post.id)}>Delete</button>
                             <div>
                                 <p>Posted by {firstLetterUppercase(post.author)} on {parseDate(post.timestamp)}</p>
-                                <p> Votescore: {post.voteScore}
+                                <p>Votescore: {post.voteScore}
                                     {<VoteScore
                                         id={post.id}
                                         updater={updatePost}/>}
                                 </p>
-                                <button onClick={()=> this.onDeletePost(post.id)}>Delete</button>
                             </div>
                         </li>))}
                     </ul>

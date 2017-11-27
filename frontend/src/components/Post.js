@@ -16,7 +16,7 @@ import CommentForm from './CommentForm';
 
 class Post extends Component {
     state = {
-        editMode: this.props.editMode || false,
+        editMode: false,
         showCommentForm: true
     }
 
@@ -34,6 +34,9 @@ class Post extends Component {
     }
 
     componentDidMount() {
+        if(this.props.location.state && this.props.location.state.editMode) {
+            this.setState({editMode: this.props.location.state.editMode})
+        }
         this.props.fetchComments(this.props.post.id)
     }
 
