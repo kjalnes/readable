@@ -3,6 +3,9 @@ import React from 'react';
 const VoteScore = ({ id, updater, parentId}) => {
 
     const voteClick = (vote) => {
+        // console.log('being clicked')
+        // console.log('id', id)
+        // console.log('updater', updater)
        updater(id, vote, parentId)
     }
 

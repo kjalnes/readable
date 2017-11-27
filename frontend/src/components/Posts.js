@@ -6,6 +6,8 @@ import { createPost } from '../actions/posts';
 import { firstLetterUppercase } from '../utils';
 import { sortCollection, parseDate } from '../utils';
 import PostForm from './PostForm';
+import VoteScore from './VoteScore';
+import { updatePost, deletePost, editPost } from '../actions/posts';
 
 class Posts extends Component {
     state = {
@@ -30,7 +32,7 @@ class Posts extends Component {
     }
 
     render() {
-        const { category, createPost } = this.props;
+        const { category, createPost, updatePost } = this.props;
         const posts = category && category === 'all' ?
              this.getAllPosts(this.props.posts) :
              this.props.posts[category];
@@ -55,11 +57,20 @@ class Posts extends Component {
                     </select>
 
                     <ul>
+                    author, number of comments, current score, voting mechanism for the post and buttons for editing and deleting the post.
                     {sortCollection(posts, this.state.filter).map((post, i) => (
                         <li key={i}>
                             <Link to={`${post.category}/${post.id}`}>
-                                {post.title} - posted on {parseDate(post.timestamp)}
+                                {post.title}
                             </Link>
+                            <div>
+                                <p>Posted by {firstLetterUppercase(post.author)} on {parseDate(post.timestamp)}</p>
+                                <p> Votescore: {post.voteScore}
+                                    {<VoteScore
+                                        id={post.id}
+                                        updater={updatePost}/>}
+                                </p>
+                            </div>
                         </li>))}
                     </ul>
                 </div> :
@@ -91,7 +102,8 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         fetchPosts: () => dispatch(fetchPosts()),
-        createPost: (payload) => dispatch(createPost(payload))
+        createPost: (payload) => dispatch(createPost(payload)),
+        updatePost: (id, option) => dispatch(updatePost(id, option))
     }
 }
 
