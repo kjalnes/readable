@@ -27,6 +27,12 @@ class Posts extends Component {
         this.setState({filter});
     }
 
+    onDeletePost(id) {
+        this.props.deletePost(id);
+        // this.props.history.push("/");
+    }
+
+
     componentDidMount() {
         this.props.fetchPosts();
     }
@@ -57,7 +63,7 @@ class Posts extends Component {
                     </select>
 
                     <ul>
-                    author, number of comments, current score, voting mechanism for the post and buttons for editing and deleting the post.
+                     for editing and deleting the post.
                     {sortCollection(posts, this.state.filter).map((post, i) => (
                         <li key={i}>
                             <Link to={`${post.category}/${post.id}`}>
@@ -70,6 +76,7 @@ class Posts extends Component {
                                         id={post.id}
                                         updater={updatePost}/>}
                                 </p>
+                                <button onClick={()=> this.onDeletePost(post.id)}>Delete</button>
                             </div>
                         </li>))}
                     </ul>
@@ -103,7 +110,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         fetchPosts: () => dispatch(fetchPosts()),
         createPost: (payload) => dispatch(createPost(payload)),
-        updatePost: (id, option) => dispatch(updatePost(id, option))
+        updatePost: (id, option) => dispatch(updatePost(id, option)),
+        deletePost: (id) => dispatch(deletePost(id)),
+        editPost: (id, updates) => dispatch(editPost(id, updates))
     }
 }
 

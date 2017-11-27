@@ -16,7 +16,7 @@ import CommentForm from './CommentForm';
 
 class Post extends Component {
     state = {
-        editMode: false,
+        editMode: this.props.editMode || false,
         showCommentForm: true
     }
 
