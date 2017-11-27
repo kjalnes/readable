@@ -134,6 +134,7 @@ function disable (token, id) {
 
 function edit (token, id, post) {
     return new Promise((res) => {
+      // console.log('post edit function', post)
         let posts = getData(token)
         for (prop in post) {
             posts[id][prop] = post[prop]
