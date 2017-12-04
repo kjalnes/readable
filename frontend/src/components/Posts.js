@@ -38,19 +38,20 @@ class Posts extends Component {
         })
     }
 
-    componentDidMount() {
-        this.props.fetchPosts();
-    }
-
     render() {
         const { category, createPost, updatePost } = this.props;
-        const posts = category && category === 'all' ?
-             this.getAllPosts(this.props.posts) :
-             this.props.posts[category];
         const filters = [
             {name: 'Vote score', key: 'voteScore'},
             {name: 'Timestamp', key: 'timestamp'},
             {name: 'Comments', key: 'commentCount'}];
+        let posts;
+
+        if (this.props.posts && category) {
+            posts = category === 'all' ?
+                this.getAllPosts(this.props.posts) :
+                this.props.posts[category] || [];
+        }
+
         return (
             <div className='posts-list'>
                 <h1>{category && firstLetterUppercase(category)}</h1>
@@ -101,9 +102,11 @@ class Posts extends Component {
 
 
 const mapStateToProps = (state, props) => {
-    let posts = state.posts;
+    let posts = state.postData.posts;
     for(var cat in posts) {
-        posts[cat] = sortCollection(posts[cat])
+        if (cat !== 'currentPost') {
+            posts[cat] = sortCollection(posts[cat]);
+        }
     }
     return {
         posts,

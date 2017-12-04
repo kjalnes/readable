@@ -7,7 +7,7 @@ import Footer from './Footer';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 import { fetchCategories } from '../actions/categories';
-
+import { fetchPosts } from '../actions/posts';
 
 class App extends Component {
   constructor(props) {
@@ -17,6 +17,7 @@ class App extends Component {
 
   componentDidMount() {
     this.props.fetchCategories();
+    this.props.fetchPosts();
   }
 
   render() {
@@ -28,7 +29,7 @@ class App extends Component {
               <Route
                 exact path={`/${cat.path}`}
                 key={i}
-                render={() => <Posts category={cat.name} {...this.props} />}
+                render={() => <Posts category={cat.name} posts={this.props.posts} {...this.props} />}
               />)
         })}
         <Route path='/:category/:id' component={Post} />
@@ -39,12 +40,18 @@ class App extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return { fetchCategories: () => dispatch(fetchCategories()) }
+    return {
+      fetchCategories: () => dispatch(fetchCategories()),
+      fetchPosts: () => dispatch(fetchPosts())
+    }
 }
 
 const mapStateToProps = (state, props) => {
   const categories = [{name:'all', path:''}].concat(state.categories);
-  return { categories }
+  return {
+    categories,
+    posts: state.postData.posts
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

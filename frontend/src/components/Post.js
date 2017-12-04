@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Route } from 'react-router-dom';
 import {
     fetchComments,
     voteComment,
     createComment,
     editComment,
     deleteComment } from '../actions/comments';
-import { updatePost, deletePost, editPost } from '../actions/posts';
+import { updatePost, deletePost, editPost, fetchPost } from '../actions/posts';
 import { parseDate, firstLetterUppercase }  from '../utils';
 import Comments from './Comments';
+import NotFound from './NotFound';
 import VoteScore from './VoteScore';
 import EditPostForm from './EditPostForm';
 import CommentForm from './CommentForm';
@@ -37,14 +39,15 @@ class Post extends Component {
         if(this.props.location.state && this.props.location.state.editMode) {
             this.setState({editMode: this.props.location.state.editMode});
         }
-        this.props.fetchComments(this.props.post.id);
+        const postId = this.props.location.pathname.split('/')[2];
+        this.props.fetchPost(postId);
+        this.props.fetchComments(postId);
     }
 
     render() {
         const {
             post,
             updatePost,
-            deletePost,
             editPost,
             comments,
             voteComment,
@@ -52,7 +55,11 @@ class Post extends Component {
             fetchComments,
             editComment,
             deleteComment
-             } = this.props;
+        } = this.props;
+
+        if (!post) {
+            return <Route component={NotFound} />;
+        }
 
         return (
             <div>
@@ -92,12 +99,10 @@ class Post extends Component {
 }
 
 const mapStateToProps = (state, props) => {
-    const category = props.match.params.category;
     const id = props.match.params.id;
-    const post = state.posts[category].filter( _post => _post.id === id)[0];
     const comments = state.comments ? state.comments[id] : null;
     return {
-        post,
+        post: state.postData.currentPost,
         comments
     }
 }
@@ -111,7 +116,8 @@ const mapDispatchToProps = (dispatch) => {
         voteComment: (parentId, id, option) => dispatch(voteComment(parentId, id, option)),
         createComment: (comment) => dispatch(createComment(comment)),
         editComment: (id, comment) => dispatch(editComment(id, comment)),
-        deleteComment: (id) => dispatch(deleteComment(id))
+        deleteComment: (id) => dispatch(deleteComment(id)),
+        fetchPost: (id) => dispatch(fetchPost(id))
     }
 }
 

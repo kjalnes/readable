@@ -42,7 +42,6 @@ class PostForm extends Component {
         const { categories, category } = this.props;
         return(
             <div className='post-form'>
-
                 <form>
                     { category === 'all' ?
                     <div>

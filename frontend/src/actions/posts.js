@@ -1,4 +1,4 @@
-import { RECEIVE_POSTS, UPDATE_POST } from '../constants';
+import { RECEIVE_POSTS, UPDATE_POST, SET_CURRENT_POST } from '../constants';
 
 const server = process.env.REACT_APP_BACKEND || 'http://localhost:3001';
 
@@ -22,6 +22,13 @@ const fetchPosts = () => (dispatch) => {
     })
 }
 
+const setCurrentPost = (post) => {
+    return {
+        type: SET_CURRENT_POST,
+        post
+    }
+}
+
 const fetchPost = (id) => (dispatch) => {
     return fetch(`${server}/posts/${id}`, {
         headers: { 'Authorization': 'whatever-you-want' }
@@ -29,7 +36,7 @@ const fetchPost = (id) => (dispatch) => {
     .then( (res) => res.text() )
     .then( data => {
         data = JSON.parse(data);
-        return dispatch(updatePostSuccess(data, id))
+        return dispatch(setCurrentPost(data))
     })
 }
 
@@ -62,6 +69,7 @@ const deletePost = (id) => (dispatch) => {
         headers: {'Authorization': 'whatever-you-want'}
     })
     .then( res => res.json())
+    // refetch posts
     .then( data => dispatch(fetchPosts()))
 }
 
@@ -90,7 +98,9 @@ const editPost = (id, payload) => (dispatch) => {
         }
     })
     .then( res => res.json())
-    .then( data => dispatch(fetchPosts()))
+    .then( data => {
+        dispatch(updatePostSuccess(data))
+    })
 }
 
 

@@ -1,4 +1,4 @@
-import { RECEIVE_COMMENTS, UPDATE_COMMENT, DELETE_COMMENT } from '../constants';
+import { RECEIVE_COMMENTS, UPDATE_COMMENT } from '../constants';
 import { fetchPost } from './posts';
 
 const server = process.env.REACT_APP_BACKEND || 'http://localhost:3001';
