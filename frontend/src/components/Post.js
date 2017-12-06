@@ -1,20 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
-import {
-    fetchComments,
-    voteComment,
-    createComment,
-    editComment,
-    deleteComment } from '../actions/comments';
-import { updatePost, deletePost, editPost, fetchPost } from '../actions/posts';
+import * as commentActions from '../actions/comments';
+import * as postActions from '../actions/posts';
 import { parseDate, firstLetterUppercase }  from '../utils';
 import Comments from './Comments';
 import NotFound from './NotFound';
 import VoteScore from './VoteScore';
 import EditPostForm from './EditPostForm';
 import CommentForm from './CommentForm';
-
 
 class Post extends Component {
     state = {
@@ -45,6 +39,7 @@ class Post extends Component {
     }
 
     render() {
+        console.log('this.props', this.props)
         const {
             post,
             updatePost,
@@ -112,18 +107,4 @@ const mapStateToProps = (state, props) => {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        updatePost: (id, option) => dispatch(updatePost(id, option)),
-        deletePost: (id) => dispatch(deletePost(id)),
-        editPost: (id, updates) => dispatch(editPost(id, updates)),
-        fetchComments: (id) => dispatch(fetchComments(id)),
-        voteComment: (parentId, id, option) => dispatch(voteComment(parentId, id, option)),
-        createComment: (comment) => dispatch(createComment(comment)),
-        editComment: (id, comment) => dispatch(editComment(id, comment)),
-        deleteComment: (id) => dispatch(deleteComment(id)),
-        fetchPost: (id) => dispatch(fetchPost(id))
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Post);
+export default connect(mapStateToProps, {...commentActions, ...postActions})(Post);

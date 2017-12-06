@@ -39,20 +39,13 @@ class App extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-      fetchCategories: () => dispatch(fetchCategories()),
-      fetchPosts: () => dispatch(fetchPosts())
-    }
-}
-
 const mapStateToProps = (state, props) => {
-  const categories = [{name:'all', path:''}].concat(state.categories);
   return {
-    categories,
+    categories: state.categories,
     posts: state.postData.posts
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, {fetchCategories, fetchPosts})(App);
+
 

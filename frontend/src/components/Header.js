@@ -41,8 +41,7 @@ const Header = ({categories, location}) => {
 }
 
 const mapStateToProps = (state, props) => {
-  const categories = [{name:'all', path:''}].concat(state.categories);
-  return { categories }
+  return { categories: state.categories }
 }
 
 export default connect(mapStateToProps)(Header);
