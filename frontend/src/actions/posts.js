@@ -37,7 +37,7 @@ const fetchPost = (id) => (dispatch) => {
     .then( data => {
         data = JSON.parse(data);
         return dispatch(setCurrentPost(data))
-    })
+    });
 }
 
 const updatePostSuccess = (post) => {

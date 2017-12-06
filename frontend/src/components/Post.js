@@ -101,8 +101,13 @@ class Post extends Component {
 const mapStateToProps = (state, props) => {
     const id = props.match.params.id;
     const comments = state.comments ? state.comments[id] : null;
+    const currentPost = state.postData.currentPost;
+    const errorPost = currentPost && currentPost.error;
+    const emptyPost = currentPost ? !Object.keys(currentPost).length : true;
+    const post = errorPost || emptyPost ? null : currentPost;
+
     return {
-        post: state.postData.currentPost,
+        post,
         comments
     }
 }

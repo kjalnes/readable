@@ -9,7 +9,7 @@ const postsReducer = (state={}, action) => {
                 obj[curr.category].push(curr) :
                 obj[curr.category] = [curr]
                 return obj
-            }, {})
+            }, {});
             return Object.assign({}, state, {posts: posts});
         case UPDATE_POST:
             let category = action.post.category;
@@ -20,12 +20,6 @@ const postsReducer = (state={}, action) => {
             newState.posts[category] = updatedCategory;
             return newState
         case SET_CURRENT_POST:
-            const isError = action.post.error;
-
-            if (isError) {
-                return state;
-            }
-
             return Object.assign({}, state, {currentPost: action.post})
         default:
             return state;
