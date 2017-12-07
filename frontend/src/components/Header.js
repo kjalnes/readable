@@ -20,7 +20,7 @@ const Header = ({categories, location}) => {
                 </Link>
                 <h1 className="App-title">Readable</h1>
             </header>
-                <p className="App-intro">Udacity Project</p>
+                <p className="App-intro">Github <a target='_blank' href='http://github.com/kjalnes/readable'>repo</a></p>
                 <ul className='nav'>
                     {categories.map((cat, i) => {
                     let linkClass = path.indexOf(cat.path) > -1 && cat.path !== '' ? 'active' : '';

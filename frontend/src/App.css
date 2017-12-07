@@ -122,19 +122,61 @@ textarea.input-body {
     margin: 0 10px;
 }
 
-
 button {
     padding: 0 10px;
     margin: 3px;
-    font-size: 20px;
+    font-size: 14px;
     background-color: cornsilk;
+    border-radius: 0px;
 }
 
-.posts-list {
+.posts-box {
     margin: 30px;
 }
 
+.posts-list {
+  text-align: left;
+  width: 70%;
+  margin: 20px auto 20px auto;
+
+}
+
+span.post-author, span.vote-score {
+    font-size: 14px;
+    padding: 0 0 0 11px;
+}
+
+span.edit-delete-btns {
+    margin: 0px 8px;
+}
+
+img.upvote, img.downvote {
+    width: 16px;
+}
+
+.vote-box {
+    margin: 0px 6px;
+}
+
+button.vote-btn {
+    background-color: transparent;
+    border: none;
+    margin: 0 2px;
+    padding: 0px;
+    cursor: pointer;
+}
 
 .none {
     margin: 30px 0px;
 }
+
+.post {
+    width: 50%;
+    margin: 60px auto;
+}
+
+.post-body {
+  text-align: left;
+}
+
+

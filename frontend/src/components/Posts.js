@@ -6,6 +6,7 @@ import { sortCollection, parseDate, firstLetterUppercase } from '../utils';
 import PostForm from './PostForm';
 import VoteScore from './VoteScore';
 
+
 class Posts extends Component {
     state = {
         filter: 'voteScore'
@@ -49,7 +50,7 @@ class Posts extends Component {
         }
 
         return (
-            <div className='posts-list'>
+            <div className='posts-box'>
                 <h1>{category && firstLetterUppercase(category)}</h1>
                 { posts && posts.length ?
                 <div>
@@ -64,29 +65,30 @@ class Posts extends Component {
                             </option>))}
                     </select>
 
-                    <ul>
+                    <ul className='posts-list'>
                     {sortCollection(posts, this.state.filter).map((post, i) => (
                         <li key={i}>
+                            {<VoteScore
+                                id={post.id}
+                                updater={updatePost}/>}
                             <Link to={`${post.category}/${post.id}`}>
                                 {post.title}
                             </Link>
-                            <button onClick={()=> this.goToPostAndEditMode(post.category, post.id)}>Edit</button>
-                            <button onClick={()=> this.onDeletePost(post.id)}>Delete</button>
-                            <div>
-                                <p>Posted by {firstLetterUppercase(post.author)} on {parseDate(post.timestamp)}</p>
-                                <p>Votescore: {post.voteScore}
-                                    {<VoteScore
-                                        id={post.id}
-                                        updater={updatePost}/>}
-                                </p>
-                            </div>
+                            <span className='post-author'> Posted by {firstLetterUppercase(post.author)} on {parseDate(post.timestamp)}
+                            </span>
+                            <span className='vote-score'>
+                             Votescore: {post.voteScore}
+                             </span>
+                             <span className='edit-delete-btns'>
+                                <button onClick={()=> this.goToPostAndEditMode(post.category, post.id)}>Edit</button>
+                                <button onClick={()=> this.onDeletePost(post.id)}>Delete</button>
+                            </span>
                         </li>))}
+                        <hr />
                     </ul>
+
                 </div> :
-                <div className='none'>
-                    There are no posts in this category yet.
-                </div>}
-                <hr />
+                <div className='none'>There are no posts in this category yet.</div>}
                 {<PostForm
                     createPost={createPost}
                     category={category}

@@ -23,16 +23,18 @@ class App extends Component {
   render() {
     return (
       <div className='App'>
-        <Header {...this.props} />
-        {this.props.categories.map( (cat, i) => {
-            return (
-              <Route
-                exact path={`/${cat.path}`}
-                key={i}
-                render={() => <Posts category={cat.name} posts={this.props.posts} {...this.props} />}
-              />)
-        })}
-        <Route path='/:category/:id' component={Post} />
+        <div className='content'>
+          <Header {...this.props} />
+          {this.props.categories.map( (cat, i) => {
+              return (
+                <Route
+                  exact path={`/${cat.path}`}
+                  key={i}
+                  render={() => <Posts category={cat.name} posts={this.props.posts} {...this.props} />}
+                />)
+          })}
+          <Route path='/:category/:id' component={Post} />
+        </div>
         <Footer />
       </div>
     );

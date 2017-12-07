@@ -63,15 +63,16 @@ class Post extends Component {
                     editPost={editPost}
                     toggleEditMode={this.toggleEditMode.bind(this)}
                     {...this.props}/> :
-                <div>
+                <div className='post'>
                     <h2>{post.title}</h2>
-                    <p>{post.body}</p>
+                    <p className='post-body'>{post.body}</p>
                     <br />
                     <p>Written by {firstLetterUppercase(post.author)} | Posted on {parseDate(post.timestamp)}</p>
                     <p>Comments: {post.commentCount} | Vote score: {post.voteScore}</p>
                     {<VoteScore id={post.id} updater={updatePost} />}
                     <button onClick={()=> this.toggleEditMode()}>Edit</button>
                     <button onClick={()=> this.onDeletePost(post.id)}>Delete</button>
+                    <hr />
                     {comments && comments.length ?
                     <Comments
                         comments={comments}
