@@ -39,7 +39,6 @@ class Post extends Component {
     }
 
     render() {
-        console.log('this.props', this.props)
         const {
             post,
             updatePost,

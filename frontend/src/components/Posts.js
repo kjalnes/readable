@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { fetchPosts } from '../actions/posts';
-import { createPost } from '../actions/posts';
-import { firstLetterUppercase } from '../utils';
-import { sortCollection, parseDate } from '../utils';
+import * as postActions from '../actions/posts';
+import { sortCollection, parseDate, firstLetterUppercase } from '../utils';
 import PostForm from './PostForm';
 import VoteScore from './VoteScore';
-import { updatePost, deletePost, editPost } from '../actions/posts';
 
 class Posts extends Component {
     state = {
@@ -45,7 +42,6 @@ class Posts extends Component {
             {name: 'Timestamp', key: 'timestamp'},
             {name: 'Comments', key: 'commentCount'}];
         let posts;
-
         if (this.props.posts && category) {
             posts = category === 'all' ?
                 this.getAllPosts(this.props.posts) :
@@ -100,28 +96,11 @@ class Posts extends Component {
     }
 }
 
-
 const mapStateToProps = (state, props) => {
-    let posts = state.postData.posts;
-    for(var cat in posts) {
-        if (cat !== 'currentPost') {
-            posts[cat] = sortCollection(posts[cat]);
-        }
-    }
     return {
-        posts,
+        posts: state.postData.posts,
         category: props.category
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        fetchPosts: () => dispatch(fetchPosts()),
-        createPost: (payload) => dispatch(createPost(payload)),
-        updatePost: (id, option) => dispatch(updatePost(id, option)),
-        deletePost: (id) => dispatch(deletePost(id)),
-        editPost: (id, updates) => dispatch(editPost(id, updates))
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Posts);
+export default connect(mapStateToProps, {...postActions})(Posts);

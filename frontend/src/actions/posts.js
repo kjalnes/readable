@@ -58,9 +58,7 @@ const updatePost = (id, option) => (dispatch) => {
         }
     })
     .then( res => res.json())
-    .then( data => {
-          return dispatch(updatePostSuccess(data, id))
-    })
+    .then( post => dispatch(updatePostSuccess(post)))
 }
 
 const deletePost = (id) => (dispatch) => {
@@ -69,7 +67,6 @@ const deletePost = (id) => (dispatch) => {
         headers: {'Authorization': 'whatever-you-want'}
     })
     .then( res => res.json())
-    // refetch posts
     .then( data => dispatch(fetchPosts()))
 }
 
