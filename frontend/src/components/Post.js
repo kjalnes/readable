@@ -67,7 +67,7 @@ class Post extends Component {
                     <h2>{post.title}</h2>
                     <p className='post-body'>{post.body}</p>
                     <br />
-                    <p>Written by {firstLetterUppercase(post.author)} | Posted on {parseDate(post.timestamp)}</p>
+                    <p>Posted on {parseDate(post.timestamp)} by {firstLetterUppercase(post.author)}</p>
                     <p>Comments: {post.commentCount} | Vote score: {post.voteScore}</p>
                     {<VoteScore id={post.id} updater={updatePost} />}
                     <button onClick={()=> this.toggleEditMode()}>Edit</button>

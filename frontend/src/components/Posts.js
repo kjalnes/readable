@@ -77,7 +77,7 @@ class Posts extends Component {
                             <span className='post-author'> Posted by {firstLetterUppercase(post.author)} on {parseDate(post.timestamp)}
                             </span>
                             <span className='vote-score'>
-                             Votescore: {post.voteScore}
+                             Votescore: {post.voteScore} | Comments: {post.commentCount}
                              </span>
                              <span className='edit-delete-btns'>
                                 <button onClick={()=> this.goToPostAndEditMode(post.category, post.id)}>Edit</button>
