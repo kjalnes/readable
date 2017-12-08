@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import uuidv1 from 'uuid/v1';
 import { firstLetterUppercase } from '../utils';
@@ -86,6 +87,13 @@ class PostForm extends Component {
 
 const mapStateToProps = (state, props) => {
     return { categories: state.categories.filter(cat => cat.name !== 'all') }
+}
+
+
+PostForm.propTypes = {
+    categories: PropTypes.array,
+    category: PropTypes.string.isRequired,
+    createPost: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps)(PostForm);

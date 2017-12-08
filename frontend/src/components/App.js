@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import '../App.css';
 import Header from './Header';
 import Posts from './Posts';
@@ -46,6 +47,12 @@ const mapStateToProps = (state, props) => {
     categories: state.categories,
     posts: state.postData.posts
   }
+}
+
+
+App.propTypes = {
+  categories: PropTypes.array.isRequired,
+  posts: PropTypes.object
 }
 
 export default connect(mapStateToProps, {fetchCategories, fetchPosts})(App);

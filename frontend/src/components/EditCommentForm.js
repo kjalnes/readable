@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class EditCommentForm extends Component {
     state = {
@@ -44,6 +45,12 @@ class EditCommentForm extends Component {
             </div>
         )
     }
+}
+
+EditCommentForm.propTypes = {
+    comment: PropTypes.object.isRequired,
+    editComment: PropTypes.func.isRequired,
+    toggleEditMode: PropTypes.func.isRequired
 }
 
 export default EditCommentForm;

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import * as postActions from '../actions/posts';
 import { sortCollection, parseDate, firstLetterUppercase } from '../utils';
 import PostForm from './PostForm';
 import VoteScore from './VoteScore';
-
 
 class Posts extends Component {
     state = {
@@ -103,6 +103,13 @@ const mapStateToProps = (state, props) => {
         posts: state.postData.posts,
         category: props.category
     }
+}
+
+Posts.propTypes = {
+    posts: PropTypes.object,
+    category: PropTypes.string.isRequired,
+    createPost: PropTypes.func.isRequired,
+    updatePost: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, {...postActions})(Posts);

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 import * as commentActions from '../actions/comments';
@@ -105,6 +106,18 @@ const mapStateToProps = (state, props) => {
         post,
         comments
     }
+}
+
+Post.propTypes = {
+    post: PropTypes.object,
+    comments: PropTypes.array,
+    updatePost: PropTypes.func.isRequired,
+    editPost: PropTypes.func.isRequired,
+    voteComment: PropTypes.func.isRequired,
+    createComment: PropTypes.func.isRequired,
+    fetchComments: PropTypes.func.isRequired,
+    editComment: PropTypes.func.isRequired,
+    deleteComment: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, {...commentActions, ...postActions})(Post);

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import upvote from '../assets/images/upvote.png';
 import downvote from '../assets/images/downvote.png';
 
@@ -19,6 +20,12 @@ const VoteScore = ({ id, updater, parentId}) => {
             </button>
         </span>
     )
+}
+
+VoteScore.propTypes = {
+    id: PropTypes.string.isRequired,
+    updater: PropTypes.func.isRequired,
+    parentId: PropTypes.string
 }
 
 export default VoteScore;

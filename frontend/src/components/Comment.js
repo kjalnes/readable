@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import VoteScore from './VoteScore';
 import { parseDate, firstLetterUppercase } from '../utils';
 
@@ -16,6 +17,13 @@ const Comment = ({ comment, voteComment, deleteComment, toggleEditMode }) => {
             </div>
         </div>
     )
+}
+
+Comment.propTypes = {
+    comment: PropTypes.object.isRequired,
+    voteComment: PropTypes.func.isRequired,
+    deleteComment: PropTypes.func.isRequired,
+    toggleEditMode: PropTypes.func.isRequired
 }
 
 export default Comment;

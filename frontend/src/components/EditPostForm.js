@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class EditPostForm extends Component {
     state = {
@@ -56,6 +57,12 @@ class EditPostForm extends Component {
             </div>
         )
     }
+}
+
+EditPostForm.propTypes = {
+    post: PropTypes.object.isRequired,
+    editPost: PropTypes.func.isRequired,
+    toggleEditMode: PropTypes.func.isRequired
 }
 
 export default EditPostForm;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import logo from '../assets/images/logo.png';
@@ -42,6 +43,10 @@ const Header = ({categories, location}) => {
 
 const mapStateToProps = (state, props) => {
   return { categories: state.categories }
+}
+
+Header.propTypes = {
+    categories: PropTypes.array.isRequired
 }
 
 export default connect(mapStateToProps)(Header);

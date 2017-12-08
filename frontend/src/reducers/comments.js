@@ -14,7 +14,7 @@ const commentsReducer = (state=[], action) => {
         return commentsObj
         case UPDATE_COMMENT:
             let parentId = action.parentId;
-            const updatedComments = state[parentId].map( comment => {
+            const updatedComments = state[parentId].map(comment => {
                 if(comment.id === action.id) {
                     return action.comment
                 }

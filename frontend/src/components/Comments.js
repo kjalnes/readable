@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Comment from './Comment';
 import EditCommentForm from './EditCommentForm';
 import { sortCollection }  from '../utils';
@@ -46,6 +47,13 @@ class Comments extends Component {
             </div>
         )
     }
+}
+
+Comments.propTypes = {
+    comments: PropTypes.array,
+    voteComment: PropTypes.func.isRequired,
+    editComment: PropTypes.func.isRequired,
+    deleteComment: PropTypes.func.isRequired
 }
 
 export default Comments;
