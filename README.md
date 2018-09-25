@@ -1,6 +1,6 @@
-##Udacity Readable Project
+## Readable Project
 
-This is the Udacity Readable project. Users can post content to predefined categories, comment on posts and other users' posts, and vote on posts and comments. Users can edit and delete posts and comments.
+This is the Readable project. Users can post content to predefined categories, comment on posts and other users' posts, and vote on posts and comments. Users can edit and delete posts and comments.
 
 
 * /api-server
